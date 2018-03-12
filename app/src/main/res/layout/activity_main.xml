@@ -26,7 +26,11 @@
             android:layout_gravity="center"
             android:layout_margin="@dimen/horizontal_margin" />
 
-
     </android.support.v7.widget.CardView>
+
+
+    <com.jetradarmobile.snowfall.SnowfallView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </FrameLayout>

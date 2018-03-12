@@ -35,5 +35,6 @@ dependencies {
     // Lottie animations library
     compile 'com.airbnb.android:lottie:2.5.0'
 
-
+    // Snow animation library
+    compile 'com.github.jetradarmobile:android-snowfall:1.2.0'
 }

@@ -19,6 +19,8 @@ allprojects {
     repositories {
         google()
         jcenter()
+//        Jitpack allows us to use libraries directly from github
+        maven { url "https://jitpack.io" }
     }
 }
 
