@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <!-- Typography -->
+    <dimen name="typography_button">15sp</dimen>
+    <dimen name="typography_caption">13sp</dimen>
+    <dimen name="typography_body1">15sp</dimen>
+    <dimen name="typography_body2">15sp</dimen>
+    <!-- these are large -->
+    <dimen name="typography_subheading">17sp</dimen>
+    <dimen name="typography_title">21sp</dimen>
+    <dimen name="typography_headline">24sp</dimen>
+    <!-- these are gigantic -->
+    <dimen name="typography_display1">34sp</dimen>
+    <dimen name="typography_display2">45sp</dimen>
+    <dimen name="typography_display3">56sp</dimen>
+    <dimen name="typography_display4">112sp</dimen>
+
+    <!-- general horizontal margins -->
+    <dimen name="horizontal_screen_edge_margin">16dp</dimen>
+    <dimen name="horizontal_margin">16dp</dimen>
+    <dimen name="horizontal_screen_edge_content_margin">72dp</dimen>
+
+    <!-- unrelated content area divider -->
+    <dimen name="layout_content_divider">8dp</dimen>
+    <!-- divider between related content items -->
+    <dimen name="layout_item_divider">1dp</dimen>
+
+    <!-- grid divider/spacer -->
+    <dimen name="layout_grid_divider">4dp</dimen>
+
+    <!-- Grid -->
+    <dimen name="grid_list_footer_height">68dp</dimen>
+    <dimen name="grid_list_vertical_text_padding">16dp</dimen>
+    <dimen name="grid_text_size">16sp</dimen>
+
+    <dimen name="putin_size">320dp</dimen>
+
+</resources>

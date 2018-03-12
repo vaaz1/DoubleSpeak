@@ -6,20 +6,25 @@
     android:layout_height="match_parent"
     tools:context="com.example.android.doublespeak.MainActivity">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/material_mountain" />
+
     <android.support.v7.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minHeight="160dp"
-        android:minWidth="160dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintBottom_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="parent"
-        app:layout_constraintRight_toLeftOf="parent">
+        android:layout_width="@dimen/putin_size"
+        android:layout_height="@dimen/putin_size"
+        android:layout_gravity="center"
+        app:cardCornerRadius="@dimen/cardview_default_radius"
+        app:cardElevation="@dimen/cardview_default_elevation">
 
         <ImageView
             android:id="@+id/card_image"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/horizontal_margin" />
 
 
     </android.support.v7.widget.CardView>

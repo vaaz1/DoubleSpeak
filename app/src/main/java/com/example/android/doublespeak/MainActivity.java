@@ -15,6 +15,6 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView cardImg = findViewById(R.id.card_image);
 
-        Glide.with(this).load().into(cardImg);
+        Glide.with(this).load(R.drawable.putin).into(cardImg);
     }
 }
