@@ -16,6 +16,17 @@
 
     <include layout="@layout/layout_game_grid" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:paddingTop="@dimen/app_bar_height"
+        android:text="@string/positive"
+        android:textColor="@color/colorCaption"
+        android:textSize="@dimen/typography_display3"
+        android:visibility="invisible" />
+
     <!-- background snow animation -->
     <com.jetradarmobile.snowfall.SnowfallView
         android:layout_width="match_parent"

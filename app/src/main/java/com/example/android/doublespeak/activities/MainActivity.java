@@ -9,12 +9,13 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.example.android.doublespeak.R;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
+    private int counter;
+    private long startTime;
+    private ImageView firstCard;
+    private ImageView secondCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,17 +42,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         }
-
         gameGrid.invalidate();
 
 
     }
 
-
-    private int counter;
-    private long startTime;
-    private ImageView firstCard;
-    private ImageView secondCard;
     @Override
     public void onClick(View view) {
         counter++;
