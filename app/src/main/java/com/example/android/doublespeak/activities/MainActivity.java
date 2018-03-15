@@ -9,26 +9,27 @@ import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.example.android.doublespeak.R;
+import com.example.android.doublespeak.carddata.Animal;
+import com.example.android.doublespeak.carddata.CardLanguage;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-
+    private ArrayList<CardLanguage.TranslateImage> arrayListEasyLevel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         GridLayout gameGrid = findViewById(R.id.game_grid);
-
         RelativeLayout appBar = findViewById(R.id.game_bar);
-
+        CardLanguage cardLanguage = new Animal(CardLanguage.Level.EASY_LEVEL);
+        arrayListEasyLevel = cardLanguage.getArrayListEasyLevel();
+        int position;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 3; j++) {
-
+                position = j + i;
 //                create the grid cell card
                 View putinView = View.inflate(this, R.layout.item_putin, null);
 
@@ -36,11 +37,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 gameGrid.addView(putinView);
 //                get the card imageview
                 ImageView putinImg = putinView.findViewById(R.id.card_image);
+                putinImg.setTag(position);
 
                 putinImg.setOnClickListener(this);
 
 //                set the card image
-                Glide.with(this).load(R.drawable.putin).into(putinImg);
+                Glide.with(this).load(arrayListEasyLevel.get(position)).into(putinImg);
 
             }
         }
@@ -55,18 +57,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private long startTime;
     private ImageView firstCard;
     private ImageView secondCard;
+
     @Override
     public void onClick(View view) {
         counter++;
-        if (counter == 1){
+        if (counter == 1) {
             startTime = System.currentTimeMillis();
         }
 
-        if (firstCard == null){
+        if (firstCard == null) {
             firstCard = (ImageView) view;
-        }else{
+        } else {
             secondCard = ((ImageView) view);
+            int currentPosition = ((int) firstCard.getTag());
+            int otherPosition = ((int) secondCard.getTag());
+            boolean isSame = CardLanguage.isSameData(arrayListEasyLevel.get(currentPosition), arrayListEasyLevel.get(otherPosition));
+            if (isSame) {
 
+            }
         }
     }
 }

@@ -2,6 +2,7 @@ package com.example.android.doublespeak.carddata;
 
 
 import android.support.annotation.DrawableRes;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public abstract class CardLanguage {
         EASY_LEVEL, MEDIUM_LEVEL, HARD_LEVEL, ALL_LEVEL;
     }
 
-    protected class TranslateImage {
+    public class TranslateImage {
         private @DrawableRes
         int imageRes;
         protected String[] languages;
@@ -176,4 +177,5 @@ public abstract class CardLanguage {
     public static boolean isSameData(TranslateImage translateImage, TranslateImage otherTranslateImage) {
         return translateImage.getImageRes() == otherTranslateImage.getImageRes();
     }
+
 }
