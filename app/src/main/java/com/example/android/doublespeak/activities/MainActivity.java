@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         GridLayout gameGrid = findViewById(R.id.game_grid);
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.centerInside();
+
+        RelativeLayout appBar = findViewById(R.id.game_bar);
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 3; j++) {
