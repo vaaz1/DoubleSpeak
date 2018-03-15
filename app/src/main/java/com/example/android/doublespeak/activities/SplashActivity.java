@@ -1,9 +1,10 @@
-package com.example.android.doublespeak;
+package com.example.android.doublespeak.activities;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.android.doublespeak.R;
 import com.example.android.doublespeak.utils.Global;
 
 public class SplashActivity extends AppCompatActivity {
@@ -25,7 +26,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 proceed();
             }
-        }, 2000);
+        }, 1000);
     }
 
     private void proceed() {
