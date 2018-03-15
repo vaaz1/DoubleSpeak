@@ -23,7 +23,8 @@ a mix between a memory game and some akin to Candy Crush.
 
 ### Itamar
 
-1. sound
+1. ~~Sound~~
+2. ~~Text to speech~~
 
 ### Yuri
 
