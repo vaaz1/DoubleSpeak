@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:layout_margin="16dp"
+    android:layout_weight="12"
     android:columnCount="4"
     android:rowCount="3">
 
