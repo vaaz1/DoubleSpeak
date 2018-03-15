@@ -1,0 +1,42 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportHeight="72.37"
+    android:viewportWidth="139.781">
+    <path
+        android:fillColor="#172983"
+        android:pathData="M117.4,26.54l-78.59,33.36l5.18,0l73.41,-31.16z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M73.87,41.78l0.74,-0.32l-0.64,-0.48z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M75.09,37.59l-0.17,-0.13l-0.54,0.23l-0.03,0.21z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M73.45,39.76l0.1,-0.8l-0.74,0.32z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M76.76,40.55l0.19,-1.56l-1.26,-0.95l-1.45,0.61l-0.19,1.56l1.26,0.94z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M75.22,41.92l-2.15,0.91l0.29,-2.31l-1.87,-1.41l2.15,-0.91l0.03,-0.21l-51.63,21.92l11.06,0l42.21,-17.92z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M75.92,41.63l0.08,0.06l0.65,-0.28l0.01,-0.1z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M77.56,39.45l-0.1,0.8l0.74,-0.31z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M75.79,37.28l2.15,-0.91l-0.29,2.32l1.87,1.4l-2.15,0.91l-0.01,0.1l40.04,-16.99l0,-4.69l-41.78,17.73z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M77.14,37.43l-0.74,0.32l0.65,0.49z" />
+    <path
+        android:fillColor="#172983"
+        android:pathData="M117.4,14.79l-106.29,45.12l5.13,0l101.16,-42.94z" />
+    <path
+        android:fillColor="#172983"
+        android:pathData="M79.52,40.1l-1.87,-1.4l0.29,-2.32l-2.15,0.91l-0.17,-0.13l-1.7,-1.28l-0.26,2.11l-0.03,0.21l-2.15,0.91l1.87,1.41l-0.28,2.32l2.15,-0.91l0.08,0.06l1.78,1.35l0.27,-2.22l0.01,-0.1L79.52,40.1zM77.56,39.45l0.64,0.49l-0.74,0.31L77.56,39.45zM73.45,39.76l-0.65,-0.49l0.74,-0.32L73.45,39.76zM77.14,37.43l-0.1,0.8l-0.65,-0.49L77.14,37.43zM74.44,37.1l0.47,0.36l0.17,0.13L74.34,37.9l0.03,-0.21L74.44,37.1zM73.87,41.78l0.1,-0.8l0.64,0.48L73.87,41.78zM74.06,40.22l0.19,-1.56l1.45,-0.61l1.26,0.95l-0.19,1.56l-1.45,0.61L74.06,40.22zM76.57,42.11l-0.56,-0.43l-0.08,-0.06l0.74,-0.32l-0.01,0.1L76.57,42.11z" />
+</vector>
