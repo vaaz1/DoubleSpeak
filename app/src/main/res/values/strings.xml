@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">DoubleSpeak</string>
+    <string name="card_desc">putin</string>
+    <string name="card_text">HELLO VERA</string>
+    <string name="bg_image">background image - mountains</string>
 </resources>
