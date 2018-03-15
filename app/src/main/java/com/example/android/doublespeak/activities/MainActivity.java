@@ -8,16 +8,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.android.doublespeak.R;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    private int counter;
-    private long startTime;
-    private ImageView firstCard;
-    private ImageView secondCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +23,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         GridLayout gameGrid = findViewById(R.id.game_grid);
-        RequestOptions requestOptions = new RequestOptions();
-        requestOptions.centerInside();
 
         RelativeLayout appBar = findViewById(R.id.game_bar);
 
@@ -44,8 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 putinImg.setOnClickListener(this);
 
 //                set the card image
-                Glide.with(this).load(R.drawable.putin).apply(requestOptions).into(putinImg);
-
+                Glide.with(this).load(R.drawable.putin).into(putinImg);
 
             }
         }
@@ -55,16 +50,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+
+    private int counter;
+    private long startTime;
+    private ImageView firstCard;
+    private ImageView secondCard;
     @Override
     public void onClick(View view) {
         counter++;
-        if (counter == 1) {
+        if (counter == 1){
             startTime = System.currentTimeMillis();
         }
 
-        if (firstCard == null) {
+        if (firstCard == null){
             firstCard = (ImageView) view;
-        } else {
+        }else{
             secondCard = ((ImageView) view);
 
         }
