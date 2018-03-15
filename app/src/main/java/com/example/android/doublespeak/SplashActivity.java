@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.android.doublespeak.utils.Global;
+
 public class SplashActivity extends AppCompatActivity {
 
     @Override
@@ -26,7 +28,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void proceed() {
-        Utils.launchActivity(this, MainActivity.class);
+        Global.launchActivity(this, MainActivity.class);
         finish();
     }
 

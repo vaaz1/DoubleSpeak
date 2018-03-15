@@ -1,4 +1,4 @@
-package com.example.android.doublespeak;
+package com.example.android.doublespeak.utils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,7 +11,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 
-public class Utils {
+public class Global {
 
     public static void launchActivity(Activity activityFrom, Class<? extends Activity> activityTo) {
         Intent activityIntent = new Intent(activityFrom, activityTo);
