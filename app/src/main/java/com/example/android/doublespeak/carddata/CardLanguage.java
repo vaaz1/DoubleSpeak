@@ -2,7 +2,6 @@ package com.example.android.doublespeak.carddata;
 
 
 import android.support.annotation.DrawableRes;
-import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,35 +49,6 @@ public abstract class CardLanguage {
     }
 
 
-    public enum TypeLanguages {
-        // image and name;
-        // TODO: 27/02/2018
-        TYPE_ENGLISH(0, "English"), TYPE_HEBREW(1, "עברית");
-
-        private int typeValue;
-        private String name;
-
-        TypeLanguages(int typeValue, String name) {
-            this.typeValue = typeValue;
-            this.name = name;
-        }
-
-        public int getTypeValue() {
-            return typeValue;
-        }
-
-        public static List<TypeLanguages> getAllTypeLanguages() {
-            List<TypeLanguages> languagesList = new ArrayList<>();
-            languagesList.add(TYPE_ENGLISH);
-            languagesList.add(TYPE_HEBREW);
-            return languagesList;
-        }
-
-        @Override
-        public String toString() {
-            return name;
-        }
-    }
 
 
     public CardLanguage(Level level) {
@@ -176,6 +146,36 @@ public abstract class CardLanguage {
 
     public static boolean isSameData(TranslateImage translateImage, TranslateImage otherTranslateImage) {
         return translateImage.getImageRes() == otherTranslateImage.getImageRes();
+    }
+
+
+    public enum TypeLanguages {
+        // image and name;
+        // TODO: 27/02/2018
+        TYPE_GERMAN(0, "German");
+
+        private int typeValue;
+        private String name;
+
+        TypeLanguages(int typeValue, String name) {
+            this.typeValue = typeValue;
+            this.name = name;
+        }
+
+        public int getTypeValue() {
+            return typeValue;
+        }
+
+        public static List<TypeLanguages> getAllTypeLanguages() {
+            List<TypeLanguages> languagesList = new ArrayList<>();
+            languagesList.add(TYPE_GERMAN);
+            return languagesList;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
     }
 
 }

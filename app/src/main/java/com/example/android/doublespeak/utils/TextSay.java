@@ -2,17 +2,45 @@ package com.example.android.doublespeak.utils;
 
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
-
-import com.example.android.doublespeak.R;
+import android.speech.tts.UtteranceProgressListener;
 
 import java.util.Locale;
 
 
-public class TextSay implements TextToSpeech.OnInitListener {
+public class TextSay extends UtteranceProgressListener implements TextToSpeech.OnInitListener {
     private TextToSpeech textToSpeech;
+    private TextSayEndListener textSayEndListener;
+
+    public void setTextSayEndListener(TextSayEndListener TextSayEndListener) {
+        this.textSayEndListener = TextSayEndListener;
+    }
 
     public TextSay(Context context){
         textToSpeech = new TextToSpeech(context,this);
+
+    }
+
+
+    public interface TextSayEndListener {
+        void onFinish();
+    }
+
+
+    @Override
+    public void onStart(String utteranceId) {
+
+    }
+
+    @Override
+    public void onDone(String utteranceId) {
+        if (textSayEndListener != null) {
+            textSayEndListener.onFinish();
+            textSayEndListener = null;
+        }
+    }
+
+    @Override
+    public void onError(String utteranceId) {
 
     }
 
@@ -34,6 +62,8 @@ public class TextSay implements TextToSpeech.OnInitListener {
     public void say(LocaleLanguage localeLanguage,String text){
         textToSpeech.setLanguage(localeLanguage.getLocale());
         textToSpeech.speak(text,TextToSpeech.QUEUE_FLUSH,null,String.valueOf(this.hashCode()));
+        textToSpeech.setOnUtteranceProgressListener(this);
+
     }
 
     public void sayInGerman(String text){
