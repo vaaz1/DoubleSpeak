@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.android.doublespeak.MainActivity">
+
+    <!-- background placeholder -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/material_mountain" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/win_screen_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/layout_content_divider"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/typography_title"
+            tools:text="Level completed!" />
+
+        <TextView
+            android:id="@+id/time_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/win_screen_title"
+            android:padding="@dimen/layout_content_divider"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/typography_body2"
+            tools:text="Your Time:" />
+
+        <TextView
+            android:id="@+id/time_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/win_screen_title"
+            android:layout_toEndOf="@+id/time_title"
+            android:padding="@dimen/layout_content_divider"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/typography_body2"
+            tools:text="2 min 32 sec" />
+
+        <TextView
+            android:id="@+id/word_number_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/time_title"
+            android:padding="@dimen/layout_content_divider"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/typography_body2"
+            tools:text="Number of words:" />
+
+        <TextView
+            android:id="@+id/word_number_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/time_title"
+            android:layout_toEndOf="@+id/word_number_title"
+            android:padding="8dp"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/typography_body2"
+            tools:text="8" />
+
+    </RelativeLayout>
+
+</FrameLayout>
