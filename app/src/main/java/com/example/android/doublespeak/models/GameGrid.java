@@ -19,6 +19,6 @@ public final class GameGrid {
     }
 
     private final Cell getCellAtPos(Pair pos) {
-        return positionAnimalMap
+        return positionAnimalMap.get(pos);
     }
 }
