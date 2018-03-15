@@ -1,4 +1,4 @@
-package com.example.android.doublespeak.card_data;
+package com.example.android.doublespeak.carddata;
 
 
 import android.support.annotation.DrawableRes;
@@ -11,69 +11,13 @@ public abstract class CardLanguage {
 
     public static final int INITIAL_CAPACITY = 200;
     private static int MAX_TRANSLATE = -1;
-
+    public int EASY_LEVEL;
+    public int MEDIUM_LEVEL;
+    public int HARD_LEVEL;
     private ArrayList<TranslateImage> arrayListLanguages;
     private ArrayList<TranslateImage> arrayListEasyLevel;
     private ArrayList<TranslateImage> arrayListMediumLevel;
     private ArrayList<TranslateImage> arrayListHardLevel;
-
-    public int EASY_LEVEL;
-    public int MEDIUM_LEVEL;
-    public int HARD_LEVEL;
-
-
-    public enum Level{
-        EASY_LEVEL,MEDIUM_LEVEL,HARD_LEVEL,ALL_LEVEL;
-    }
-
-    protected class TranslateImage{
-        private @DrawableRes int imageRes;
-        protected String[] languages;
-        protected TranslateImage(@DrawableRes int imageRes, String[] languages) {
-            if (MAX_TRANSLATE == -1){
-                MAX_TRANSLATE = languages.length;
-            }else if (MAX_TRANSLATE < languages.length){
-                throw new RuntimeException("You muse to translate least " + (languages.length-1) + " Translates");
-            }
-            this.imageRes = imageRes;
-            this.languages = languages;
-        }
-        public @DrawableRes int getImageRes() {
-            return imageRes;
-        }
-
-    }
-
-
-    public enum TypeLanguages {
-        // image and name;
-        // TODO: 27/02/2018
-        TYPE_ENGLISH(0, "English"), TYPE_HEBREW(1, "עברית");
-
-        private int typeValue;
-        private String name;
-
-        TypeLanguages(int typeValue, String name) {
-            this.typeValue = typeValue;
-            this.name = name;
-        }
-
-        public int getTypeValue() {
-            return typeValue;
-        }
-
-        public static List<TypeLanguages> getAllTypeLanguages() {
-            List<TypeLanguages> languagesList = new ArrayList<>();
-            languagesList.add(TYPE_ENGLISH);
-            languagesList.add(TYPE_HEBREW);
-            return languagesList;
-        }
-
-        @Override
-        public String toString() {
-            return name;
-        }
-    }
 
 
     public CardLanguage(Level level){
@@ -108,24 +52,23 @@ public abstract class CardLanguage {
         HARD_LEVEL = arrayListLanguages.size();
     }
 
-
-
     protected abstract void addEasyLevel();
+
     protected abstract void addMediumLevel();
+
     protected abstract void addHardLevel();
-
-
 
     protected void addEasyLanguages(@DrawableRes int imageRes, String... languages) {
         arrayListEasyLevel.add(new TranslateImage(imageRes, languages));
     }
+
     protected void addMediumLanguages(@DrawableRes int imageRes, String... languages) {
         arrayListEasyLevel.add(new TranslateImage(imageRes, languages));
     }
+
     protected void addHardLanguages(@DrawableRes int imageRes, String... languages) {
         arrayListEasyLevel.add(new TranslateImage(imageRes, languages));
     }
-
 
     public ArrayList<TranslateImage> getArrayListLanguages() {
         return arrayListLanguages;
@@ -164,5 +107,61 @@ public abstract class CardLanguage {
             return null;
         }
         return arrayListLanguages.get(position).languages[typeLanguages.getTypeValue()];
+    }
+
+    public enum Level {
+        EASY_LEVEL, MEDIUM_LEVEL, HARD_LEVEL, ALL_LEVEL
+    }
+
+    public enum TypeLanguages {
+        // image and name;
+        // TODO: 27/02/2018
+        TYPE_ENGLISH(0, "English"), TYPE_HEBREW(1, "עברית");
+
+        private int typeValue;
+        private String name;
+
+        TypeLanguages(int typeValue, String name) {
+            this.typeValue = typeValue;
+            this.name = name;
+        }
+
+        public static List<TypeLanguages> getAllTypeLanguages() {
+            List<TypeLanguages> languagesList = new ArrayList<>();
+            languagesList.add(TYPE_ENGLISH);
+            languagesList.add(TYPE_HEBREW);
+            return languagesList;
+        }
+
+        public int getTypeValue() {
+            return typeValue;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
+    }
+
+    protected class TranslateImage {
+        protected String[] languages;
+        private @DrawableRes
+        int imageRes;
+
+        protected TranslateImage(@DrawableRes int imageRes, String[] languages) {
+            if (MAX_TRANSLATE == -1) {
+                MAX_TRANSLATE = languages.length;
+            } else if (MAX_TRANSLATE < languages.length) {
+                throw new RuntimeException("You muse to translate least " + (languages.length - 1) + " Translates");
+            }
+            this.imageRes = imageRes;
+            this.languages = languages;
+        }
+
+        public @DrawableRes
+        int getImageRes() {
+            return imageRes;
+        }
+
     }
 }

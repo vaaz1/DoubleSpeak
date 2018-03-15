@@ -1,4 +1,4 @@
-package com.example.android.doublespeak.card_data;
+package com.example.android.doublespeak.carddata;
 
 
 public class Animal extends CardLanguage {
@@ -9,7 +9,6 @@ public class Animal extends CardLanguage {
 
     @Override
     protected void addEasyLevel() {
-
     }
 
     @Override
