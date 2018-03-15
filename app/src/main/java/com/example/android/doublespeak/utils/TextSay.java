@@ -3,6 +3,8 @@ package com.example.android.doublespeak.utils;
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
 
+import com.example.android.doublespeak.R;
+
 import java.util.Locale;
 
 
