@@ -5,12 +5,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 
-import com.bumptech.glide.Glide;
 import com.example.android.doublespeak.R;
 import com.example.android.doublespeak.carddata.Animal;
 import com.example.android.doublespeak.carddata.CardLanguage;
@@ -25,6 +28,7 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, TimeKeeper.TimerCallback {
 
+    public static final int TIME_LIMIT = 30;
     private List<CardLanguage.TranslateImage> arrayListEasyLevel;
     private List<CardLanguage.TranslateImage> currentLevelData;
     private CardLanguage cardLanguage;
@@ -33,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CardLanguage.TypeLanguages currentTypeLanguage;
     private TextSay.LocaleLanguage currentLocalLanguage;
     private RelativeLayout appBar;
-    private GridLayout gameGrid;
+    private TableLayout mainGameTableLayout;
     private TextSayEndListener textSayEndListener;
     private int rightGuesses;
     private boolean animIsRunning;
@@ -44,55 +48,55 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-/*    @Override
-    public void onClick(View view) {
-        if (flip != null) {
-            if (isRun || flip.isRunning()) {
-                Log.d("isRun", "true");
-                return;
+    /*    @Override
+        public void onClick(View view) {
+            if (flip != null) {
+                if (isRun || flip.isRunning()) {
+                    Log.d("isRun", "true");
+                    return;
+                }
             }
-        }
-        counter++;
-        if (counter == 1) {
-            startTime = System.currentTimeMillis();
-        }
-        //flipIt(view);
-        //Toast.makeText(this, "Tag is: " + view.getTag(), Toast.LENGTH_SHORT).show();
-        final ImageView clickedCard = (ImageView) view;
-        final int tag = Integer.parseInt(clickedCard.getTag().toString());
-        //int tag = Integer.valueOf(clickedCard.getTag().toString());
-        clickedCard.setImageResource(heroes[tag]);
-        if (counter % 2 == 0) {
-            // Even card - need to check this card and the previous card
-            int tag2 = Integer.parseInt(firstCard.getTag().toString());
-            flipIt(firstCard);
-            flipIt(clickedCard);
-            if (heroes[tag].equals(heroes[tag2])) {
-                // Cards are the same
-                clickedCard.setOnClickListener(null);
-                //firstCard.setOnClickListener(null);
-                rightGuesses++;
-                if (heroes.length == (2 * rightGuesses)) {
+            counter++;
+            if (counter == 1) {
+                startTime = System.currentTimeMillis();
+            }
+            //flipIt(view);
+            //Toast.makeText(this, "Tag is: " + view.getTag(), Toast.LENGTH_SHORT).show();
+            final ImageView clickedCard = (ImageView) view;
+            final int tag = Integer.parseInt(clickedCard.getTag().toString());
+            //int tag = Integer.valueOf(clickedCard.getTag().toString());
+            clickedCard.setImageResource(heroes[tag]);
+            if (counter % 2 == 0) {
+                // Even card - need to check this card and the previous card
+                int tag2 = Integer.parseInt(firstCard.getTag().toString());
+                flipIt(firstCard);
+                flipIt(clickedCard);
+                if (heroes[tag].equals(heroes[tag2])) {
+                    // Cards are the same
+                    clickedCard.setOnClickListener(null);
+                    //firstCard.setOnClickListener(null);
+                    rightGuesses++;
+                    if (heroes.length == (2 * rightGuesses)) {
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                removeToEndActivity();
+                            }
+                        }, flip.isRunning() ? 900 : 0);
+                    }
+                } else {
+                    // Cards are different
+                    isRun = true;
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            removeToEndActivity();
+                            firstCard.setOnClickListener(GameActivity.this);
+                            firstCard.setImageResource(R.drawable.card);
+                            clickedCard.setImageResource(R.drawable.card);
+                            isRun = false;
                         }
-                    }, flip.isRunning() ? 900 : 0);
-                }
-            } else {
-                // Cards are different
-                isRun = true;
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        firstCard.setOnClickListener(GameActivity.this);
-                        firstCard.setImageResource(R.drawable.card);
-                        clickedCard.setImageResource(R.drawable.card);
-                        isRun = false;
-                    }
-                }, 900);
-                *//*flipIt(firstCard);
+                    }, 900);
+                    *//*flipIt(firstCard);
                 flipIt(clickedCard);*//*
 
             }
@@ -107,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CardView firstCard;
     private CardView secondCard;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,39 +121,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initArray(arrayListEasyLevel, currentLevelData);
         shuffle(currentLevelData);
         int position = 0;
+        TimeKeeper.setTimeLimit(TIME_LIMIT);
 
         CardView.LayoutParams imageParam = new FrameLayout.LayoutParams(100, 100, Gravity.CENTER);
         GridLayout.LayoutParams cardParam = new GridLayout.LayoutParams(GridLayout.spec(0, 0.0F), GridLayout.spec(0, 0.0F));
+        LinearLayout.LayoutParams adrowParams = new LinearLayout.LayoutParams( ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+        TableLayout.LayoutParams rowParam = new TableLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,1);
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
 
-            for (int j = 0; j < 3; j++) {
+            TableRow tableRow = new TableRow(this);
+            tableRow.setLayoutParams(rowParam);
+            for (int j = 0; j < 4; j++) {
 //                create the grid cell card
                 CardView cardView = (CardView) View.inflate(this, R.layout.item_putin, null);
 //                add the card to the grid
-                gameGrid.addView(cardView);
                 cardView.setOnClickListener(this);
                 cardView.setTag(position);
-
-
 //                get the card imageView
                 ImageView imageInside = cardView.findViewById(R.id.card_image);
-                imageInside.setLayoutParams(imageParam);
+                //imageInside.setLayoutParams(imageParam);
+                tableRow.addView(cardView);
 
 //                set the card image
-                Glide.with(this).load(currentLevelData.get(position).getImageRes()).into(imageInside);
+                imageInside.setImageResource(R.drawable.material_mountain);
+                //Glide.with(this).load(currentLevelData.get(position).getImageRes()).into(imageInside);
                 position++;
 
             }
+            mainGameTableLayout.addView(tableRow);
         }
-
-        gameGrid.invalidate();
-
-
+        mainGameTableLayout.invalidate();
     }
 
     private void initViews() {
-        gameGrid = findViewById(R.id.game_grid);
+        mainGameTableLayout = findViewById(R.id.mainGameTableLayout);
         appBar = findViewById(R.id.game_bar);
 
 
@@ -200,23 +207,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 firstCard = (CardView) view;
                 firstCard.setOnClickListener(null);
                 firstPosition = ((int) firstCard.getTag());
+                textSay.setTextSayEndListener(null);
                 textSay.say(currentLocalLanguage, cardLanguage.getLanguage(currentTypeLanguage, firstPosition));
-
             } else {
                 secondCard = ((CardView) view);
                 otherPosition = ((int) secondCard.getTag());
-                textSay.say(currentLocalLanguage, cardLanguage.getLanguage(currentTypeLanguage, otherPosition));
+                //textSay.say(currentLocalLanguage, cardLanguage.getLanguage(currentTypeLanguage, otherPosition));
+                //textSay.setTextSayEndListener(textSayEndListener);
                 boolean isSame = CardLanguage.isSameData(arrayListEasyLevel.get(firstPosition), arrayListEasyLevel.get(otherPosition));
-                textSayEndListener.setSame(isSame);
-                textSay.setTextSayEndListener(textSayEndListener);
+                //textSayEndListener.setSame(isSame);
                 if (isSame) {
                     rightGuesses++;
                     if (rightGuesses == currentLevelData.size() / 2) {
+                        firstCard.setOnClickListener(null);
+                        secondCard.setOnClickListener(null);
                         soundPlayer.makeSoundGameCompleted();
+                    }else{
+                        soundPlayer.makeSoundSuccess();
                     }
+                }else{
+                    soundPlayer.makeSoundFail();
                 }
-                firstCard.setOnClickListener(this);
-                firstCard = null;
+                    firstCard.setOnClickListener(this);
+                    firstCard = null;
+
             }
         } catch (Exception e) {
             e.getStackTrace();
@@ -253,6 +267,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         }
     }
 }

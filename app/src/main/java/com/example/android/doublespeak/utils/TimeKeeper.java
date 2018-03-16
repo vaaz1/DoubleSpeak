@@ -13,11 +13,16 @@ import java.util.TimerTask;
  */
 
 public final class TimeKeeper {
-    private static final long TIME_LIMIT = 60;
+    private static long timeLimit;
     private final WeakReference<TimerCallback> callback;
     private final Timer timer;
     private long initialTime;
     private long elapsedtime;
+
+
+    public static void setTimeLimit(long timeLimit) {
+        TimeKeeper.timeLimit = timeLimit;
+    }
 
     public TimeKeeper(@NonNull final TimerCallback callback) {
         this.initialTime = SystemClock.elapsedRealtime();
@@ -29,7 +34,7 @@ public final class TimeKeeper {
             @Override
             public void run() {
                 elapsedtime = (SystemClock.elapsedRealtime() - initialTime) / 1000;
-                long remainingTime = TIME_LIMIT - elapsedtime;
+                long remainingTime = TimeKeeper.timeLimit - elapsedtime;
                 if (TimeKeeper.this.callback.get() == null) {
                     timer.cancel();
                     timer.purge();
