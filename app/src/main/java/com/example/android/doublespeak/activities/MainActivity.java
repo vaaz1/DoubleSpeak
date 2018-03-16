@@ -154,14 +154,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //textSayEndListener.setSame(isSame);
                 if (isSame) {
                     rightGuesses++;
+                    mExplosionField.explode(firstCard);
+                    mExplosionField.explode(secondCard);
                     if (rightGuesses == currentLevelData.size() / 2) {
                         firstCard.setOnClickListener(null);
                         secondCard.setOnClickListener(null);
                         soundPlayer.makeSoundGameCompleted();
                     } else {
                         soundPlayer.makeSoundSuccess();
-                        mExplosionField.explode(firstCard);
-                        mExplosionField.explode(secondCard);
+
                     }
                 } else {
                     soundPlayer.makeSoundFail();
