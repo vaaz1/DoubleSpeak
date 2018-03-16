@@ -26,7 +26,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 proceed();
             }
-        }, 3000);
+        }, 1000);
     }
 
     private void proceed() {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,27 +15,17 @@
         android:scaleType="centerCrop"
         android:src="@drawable/material_mountain" />
 
-    <LinearLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/game_grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <include layout="@layout/layout_game_bar" />
-
-        <TableLayout
-            android:id="@+id/mainGameTableLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/horizontal_screen_edge_margin"
-            android:layout_gravity="center"
-            android:stretchColumns="*"
-            android:numColumns="3"
-            android:rowCount="4"/>
-
-    </LinearLayout>
-
-
-
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/layout_vertical_spacing_subtitle"
+        android:paddingLeft="@dimen/horizontal_screen_edge_content_margin"
+        android:paddingRight="@dimen/horizontal_screen_edge_content_margin"
+        android:paddingTop="@dimen/app_bar_height"
+        app:layoutManager="GridLayoutManager"
+        tools:listitem="@layout/item_card" />
 
     <TextView
         android:layout_width="match_parent"

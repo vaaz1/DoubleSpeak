@@ -18,7 +18,7 @@ public class GridAdapter extends ArrayAdapter {
     private String[] imageUrls;
 
     public GridAdapter(Context context) {
-        super(context, R.layout.item_putin);
+        super(context, R.layout.item_card);
 
         this.context = context;
         inflater = LayoutInflater.from(context);
@@ -27,7 +27,7 @@ public class GridAdapter extends ArrayAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (null == convertView) {
-            convertView = inflater.inflate(R.layout.item_putin, parent, false);
+            convertView = inflater.inflate(R.layout.item_card, parent, false);
 
         }
 

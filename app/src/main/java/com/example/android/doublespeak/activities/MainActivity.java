@@ -3,21 +3,17 @@ package com.example.android.doublespeak.activities;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.view.Gravity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.GridLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 
 import com.example.android.doublespeak.R;
 import com.example.android.doublespeak.carddata.Animal;
 import com.example.android.doublespeak.carddata.CardLanguage;
+import com.example.android.doublespeak.models.Cell;
+import com.example.android.doublespeak.recycler.RecyclerViewAdapter;
 import com.example.android.doublespeak.utils.SoundPlayer;
 import com.example.android.doublespeak.utils.TextSay;
 import com.example.android.doublespeak.utils.TimeKeeper;
@@ -32,6 +28,25 @@ import tyrantgit.explosionfield.ExplosionField;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, TimeKeeper.TimerCallback {
 
     public static final int TIME_LIMIT = 30;
+    private static final int NUM_OF_COLUMNS = 4;
+    //    create empty list of cells
+    private final static List<Cell> cellList = new ArrayList<>(0);
+
+    static {
+        cellList.add(new Cell("Löwe"));
+        cellList.add(new Cell("Igel"));
+        cellList.add(new Cell("Adler"));
+        cellList.add(new Cell("Fuchs"));
+        cellList.add(new Cell("Eule"));
+        cellList.add(new Cell("Affe"));
+        cellList.add(new Cell("Kuh"));
+        cellList.add(new Cell("Esel"));
+        cellList.add(new Cell("Taube"));
+        cellList.add(new Cell("Pfau"));
+        cellList.add(new Cell("Hai"));
+        cellList.add(new Cell("Reh"));
+    }
+
     private List<CardLanguage.TranslateImage> arrayListEasyLevel;
     private List<CardLanguage.TranslateImage> currentLevelData;
     private CardLanguage cardLanguage;
@@ -51,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CardView firstCard;
     private CardView secondCard;
     private ExplosionField mExplosionField;
+    private RecyclerView recycler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,40 +78,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         shuffle(currentLevelData);
         int position = 0;
         TimeKeeper.setTimeLimit(TIME_LIMIT);
-        mExplosionField=ExplosionField.attach2Window(this);
-        CardView.LayoutParams imageParam = new FrameLayout.LayoutParams(100, 100, Gravity.CENTER);
-        GridLayout.LayoutParams cardParam = new GridLayout.LayoutParams(GridLayout.spec(0, 0.0F), GridLayout.spec(0, 0.0F));
-        LinearLayout.LayoutParams adrowParams = new LinearLayout.LayoutParams( ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
-        TableLayout.LayoutParams rowParam = new TableLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,1);
+        mExplosionField = ExplosionField.attach2Window(this);
 
-        for (int i = 0; i < 3; i++) {
+                /* init recycler view */
+        recycler = findViewById(R.id.game_grid);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, NUM_OF_COLUMNS);
+        recycler.setHasFixedSize(true);
+        recycler.setLayoutManager(gridLayoutManager);
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(this, cellList);
+        recycler.setAdapter(recyclerViewAdapter);
 
-            TableRow tableRow = new TableRow(this);
-            tableRow.setLayoutParams(rowParam);
-            for (int j = 0; j < 4; j++) {
-//                create the grid cell card
-                CardView cardView = (CardView) View.inflate(this, R.layout.item_putin, null);
-//                add the card to the grid
-                cardView.setOnClickListener(this);
-                cardView.setTag(position);
-//                get the card imageView
-                ImageView imageInside = cardView.findViewById(R.id.card_image);
-                //imageInside.setLayoutParams(imageParam);
-                tableRow.addView(cardView);
-
-//                set the card image
-                imageInside.setImageResource(R.drawable.material_mountain);
-                //Glide.with(this).load(currentLevelData.get(position).getImageRes()).into(imageInside);
-                position++;
-
-            }
-            mainGameTableLayout.addView(tableRow);
-        }
-        mainGameTableLayout.invalidate();
     }
 
     private void initViews() {
-        mainGameTableLayout = findViewById(R.id.mainGameTableLayout);
+//        mainGameTableLayout = findViewById(R.id.mainGameTableLayout);
         appBar = findViewById(R.id.game_bar);
     }
 
@@ -161,19 +157,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         secondCard.setOnClickListener(null);
                         soundPlayer.makeSoundGameCompleted();
                         long endTime = startTime - System.currentTimeMillis();
-                        String second = String.valueOf(endTime/1000);
-                        int countTry = counter/2;
+                        String second = String.valueOf(endTime / 1000);
+                        int countTry = counter / 2;
 
-                    }else{
+                    } else {
                         soundPlayer.makeSoundSuccess();
                         mExplosionField.explode(firstCard);
                         mExplosionField.explode(secondCard);
                     }
-                }else{
+                } else {
                     soundPlayer.makeSoundFail();
                 }
-                    firstCard.setOnClickListener(this);
-                    firstCard = null;
+                firstCard.setOnClickListener(this);
+                firstCard = null;
 
             }
         } catch (Exception e) {

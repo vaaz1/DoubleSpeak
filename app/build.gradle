@@ -41,4 +41,7 @@ dependencies {
 
     // Snow animation library
     compile 'com.github.jetradarmobile:android-snowfall:1.2.0'
+
+    //    used to build the recycler grid
+    compile 'com.android.support:recyclerview-v7:26.1.0'
 }
