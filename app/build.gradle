@@ -26,6 +26,10 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
+    //explosion anim
+    compile 'tyrantgit:explosionfield:1.0.1'
+
+
     // Glide image and gif loading library
     implementation 'com.github.bumptech.glide:glide:4.6.1'
 
