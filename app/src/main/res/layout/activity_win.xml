@@ -70,6 +70,27 @@
             android:textSize="@dimen/typography_body2"
             tools:text="8" />
 
+        <TextView
+            android:id="@+id/tries_number_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/word_number_title"
+            android:padding="@dimen/layout_content_divider"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/typography_body2"
+            tools:text="Number of tries:" />
+
+        <TextView
+            android:id="@+id/tries_number_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/word_number_title"
+            android:layout_toEndOf="@+id/tries_number_title"
+            android:padding="8dp"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/typography_body2"
+            tools:text="17" />
+
     </RelativeLayout>
 
 </FrameLayout>
