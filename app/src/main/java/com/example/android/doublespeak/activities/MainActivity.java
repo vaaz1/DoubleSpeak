@@ -2,12 +2,10 @@ package com.example.android.doublespeak.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.TableLayout;
 
 import com.example.android.doublespeak.R;
 import com.example.android.doublespeak.carddata.Animal;
@@ -25,48 +23,46 @@ import java.util.Random;
 
 import tyrantgit.explosionfield.ExplosionField;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, TimeKeeper.TimerCallback {
+public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerCallback, View.OnClickListener {
 
     public static final int TIME_LIMIT = 30;
     private static final int NUM_OF_COLUMNS = 4;
     //    create empty list of cells
-    private final static List<Cell> cellList = new ArrayList<>(0);
+    private static final List<Cell> cellList = new ArrayList<>(0);
 
     static {
-        cellList.add(new Cell("Löwe"));
-        cellList.add(new Cell("Igel"));
-        cellList.add(new Cell("Adler"));
-        cellList.add(new Cell("Fuchs"));
-        cellList.add(new Cell("Eule"));
-        cellList.add(new Cell("Affe"));
-        cellList.add(new Cell("Kuh"));
-        cellList.add(new Cell("Esel"));
-        cellList.add(new Cell("Taube"));
-        cellList.add(new Cell("Pfau"));
-        cellList.add(new Cell("Hai"));
-        cellList.add(new Cell("Reh"));
+        cellList.add(new Cell("Löwe", R.drawable.eagle));
+        cellList.add(new Cell("Igel", R.drawable.eagle));
+        cellList.add(new Cell("Adler", R.drawable.eagle));
+        cellList.add(new Cell("Fuchs", R.drawable.eagle));
+        cellList.add(new Cell("Eule", R.drawable.eagle));
+        cellList.add(new Cell("Affe", R.drawable.putin));
+        cellList.add(new Cell("Kuh", R.drawable.putin));
+        cellList.add(new Cell("Esel", R.drawable.putin));
+        cellList.add(new Cell("Taube", R.drawable.putin));
+        cellList.add(new Cell("Pfau", R.drawable.putin));
+        cellList.add(new Cell("Hai", R.drawable.putin));
+        cellList.add(new Cell("Reh", R.drawable.putin));
     }
 
-    private List<CardLanguage.TranslateImage> arrayListEasyLevel;
-    private List<CardLanguage.TranslateImage> currentLevelData;
+
     private CardLanguage cardLanguage;
-    private TextSay textSay;
     private SoundPlayer soundPlayer;
+    private RelativeLayout appBar;
+    private TextSay textSay;
     private CardLanguage.TypeLanguages currentTypeLanguage;
     private TextSay.LocaleLanguage currentLocalLanguage;
-    private RelativeLayout appBar;
-    private TableLayout mainGameTableLayout;
     private TextSayEndListener textSayEndListener;
     private int rightGuesses;
-    private boolean animIsRunning;
     private int firstPosition;
     private int otherPosition;
     private int counter;
     private long startTime;
-    private CardView firstCard;
-    private CardView secondCard;
+    private View firstCard;
+    private View secondCard;
     private ExplosionField mExplosionField;
     private RecyclerView recycler;
+    private TimeKeeper timeKeeper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,24 +70,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         initViews();
         initObjects();
-        initArray(arrayListEasyLevel, currentLevelData);
-        shuffle(currentLevelData);
-        int position = 0;
-        TimeKeeper.setTimeLimit(TIME_LIMIT);
-        mExplosionField = ExplosionField.attach2Window(this);
+        shuffle(cellList);
+        initArray();
+        shuffle(cellList);
+        initRecyclerView();
+    }
 
-                /* init recycler view */
-        recycler = findViewById(R.id.game_grid);
+    private void initArray() {
+        List<Cell> cells = new ArrayList<>();
+        for (int i = 0; i < cellList.size(); i += 2) {
+            cells.add(i, cellList.get(i / 2));
+            cells.add(i + 1, cellList.get(i / 2));
+        }
+        cellList.clear();
+        cellList.addAll(cells);
+    }
+
+    private void initRecyclerView() {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, NUM_OF_COLUMNS);
         recycler.setHasFixedSize(true);
         recycler.setLayoutManager(gridLayoutManager);
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(this, cellList);
         recycler.setAdapter(recyclerViewAdapter);
-
     }
 
     private void initViews() {
-//        mainGameTableLayout = findViewById(R.id.mainGameTableLayout);
+        recycler = findViewById(R.id.game_grid);
         appBar = findViewById(R.id.game_bar);
     }
 
@@ -101,17 +105,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         currentTypeLanguage = CardLanguage.TypeLanguages.TYPE_GERMAN;
         currentLocalLanguage = TextSay.LocaleLanguage.GERMAN;
         cardLanguage = new Animal(CardLanguage.Level.EASY_LEVEL);
-        arrayListEasyLevel = cardLanguage.getArrayListEasyLevel();
-        currentLevelData = new ArrayList<>(arrayListEasyLevel.size() * 2);
         textSayEndListener = new TextSayEndListener();
+        timeKeeper = new TimeKeeper(this, TIME_LIMIT);
+        mExplosionField = ExplosionField.attach2Window(this);
     }
 
-    private void initArray(List<CardLanguage.TranslateImage> arrayListLevel, List<CardLanguage.TranslateImage> currentLevelData) {
-        for (int i = 0; i < arrayListLevel.size(); i += 2) {
-            currentLevelData.add(i, arrayListLevel.get(i / 2));
-            currentLevelData.add(i + 1, arrayListLevel.get(i / 2));
-        }
-    }
+
 
     private <T> void shuffle(List<T> arrayList) {
         Random random = new Random(System.currentTimeMillis());
@@ -128,31 +127,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         try {
-            if (animIsRunning) {
-                return;
-            }
-            counter++;
-            if (counter == 1) {
-                // First click app
+            if (++counter == 1) {
                 startTime = System.currentTimeMillis();
+                timeKeeper.start();
             }
-
             if (firstCard == null) {
-                firstCard = (CardView) view;
+                firstCard = view;
                 firstCard.setOnClickListener(null);
                 firstPosition = ((int) firstCard.getTag());
                 textSay.setTextSayEndListener(null);
-                textSay.say(currentLocalLanguage, cardLanguage.getLanguage(currentTypeLanguage, firstPosition));
+                textSay.say(currentLocalLanguage, cellList.get(firstPosition).getAnimal());
             } else {
-                secondCard = ((CardView) view);
+                secondCard = view;
                 otherPosition = ((int) secondCard.getTag());
                 //textSay.say(currentLocalLanguage, cardLanguage.getLanguage(currentTypeLanguage, otherPosition));
                 //textSay.setTextSayEndListener(textSayEndListener);
-                boolean isSame = CardLanguage.isSameData(arrayListEasyLevel.get(firstPosition), arrayListEasyLevel.get(otherPosition));
+                boolean isSame = cellList.get(firstPosition).equals(cellList.get(otherPosition));
                 //textSayEndListener.setSame(isSame);
                 if (isSame) {
                     rightGuesses++;
-                    if (rightGuesses == currentLevelData.size() / 2) {
+                    mExplosionField.explode(firstCard);
+                    mExplosionField.explode(secondCard);
+                    if (rightGuesses == cellList.size() / 2) {
                         firstCard.setOnClickListener(null);
                         secondCard.setOnClickListener(null);
                         soundPlayer.makeSoundGameCompleted();
@@ -162,8 +158,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     } else {
                         soundPlayer.makeSoundSuccess();
-                        mExplosionField.explode(firstCard);
-                        mExplosionField.explode(secondCard);
+
                     }
                 } else {
                     soundPlayer.makeSoundFail();
@@ -176,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             e.getStackTrace();
         }
     }
+
 
     @Override
     public void onTimeUpdate(long seconds) {
