@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initArray(arrayListEasyLevel, currentLevelData);
         shuffle(currentLevelData);
         int position = 0;
-        TimeKeeper.setTimeLimit(TIME_LIMIT);
+//        TimeKeeper.setTimeLimit(TIME_LIMIT);
         mExplosionField = ExplosionField.attach2Window(this);
 
                 /* init recycler view */
