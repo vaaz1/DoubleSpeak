@@ -15,7 +15,15 @@
         android:src="@drawable/material_mountain" />
 
     <include layout="@layout/layout_game_bar" />
-    <include layout="@layout/layout_game_grid" />
+    <LinearLayout
+        android:id="@+id/mainLinearLayoutGame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/horizontal_screen_edge_content_margin"
+        android:orientation="vertical">
+
+
+    </LinearLayout>
 
     <!-- background snow animation -->
     <com.jetradarmobile.snowfall.SnowfallView
