@@ -94,8 +94,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initViews() {
         mainGameTableLayout = findViewById(R.id.mainGameTableLayout);
         appBar = findViewById(R.id.game_bar);
-
-
     }
 
     private void initObjects() {
