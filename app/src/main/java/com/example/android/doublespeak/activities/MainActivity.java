@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 
 import com.example.android.doublespeak.R;
 import com.example.android.doublespeak.carddata.Animal;
@@ -157,6 +158,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         firstCard.setOnClickListener(null);
                         secondCard.setOnClickListener(null);
                         soundPlayer.makeSoundGameCompleted();
+                        long endTime = startTime - System.currentTimeMillis();
+                        String second = String.valueOf(endTime/1000);
+                        int countTry = counter/2;
+
                     }else{
                         soundPlayer.makeSoundSuccess();
                     }
@@ -174,7 +179,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onTimeUpdate(long seconds) {
-
     }
 
     @Override

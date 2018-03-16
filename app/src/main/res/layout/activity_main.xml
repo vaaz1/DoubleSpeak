@@ -14,17 +14,27 @@
         android:scaleType="centerCrop"
         android:src="@drawable/material_mountain" />
 
-    <include layout="@layout/layout_game_bar" />
-
-    <TableLayout
-        android:id="@+id/mainGameTableLayout"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/horizontal_screen_edge_content_margin"
-        android:layout_gravity="center"
-        android:stretchColumns="*"
-        android:numColumns="3"
-        android:rowCount="4"/>
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_game_bar" />
+
+        <TableLayout
+            android:id="@+id/mainGameTableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/horizontal_screen_edge_margin"
+            android:layout_gravity="center"
+            android:stretchColumns="*"
+            android:numColumns="3"
+            android:rowCount="4"/>
+
+    </LinearLayout>
+
+
+
 
     <TextView
         android:layout_width="match_parent"
