@@ -11,9 +11,9 @@ import java.util.TimerTask;
 
 
 public final class TimeKeeper {
-    private long timeLimit;
     private final WeakReference<TimerCallback> callback;
     private final Timer timer;
+    private long timeLimit;
     private long initialTime;
     private long elapsedTime;
 
@@ -28,6 +28,11 @@ public final class TimeKeeper {
         this.callback = new WeakReference<>(callback);
 
 
+    }
+
+    public void cancel() {
+        timer.cancel();
+        timer.purge();
     }
 
 

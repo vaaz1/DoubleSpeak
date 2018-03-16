@@ -1,7 +1,6 @@
 package com.example.android.doublespeak.activities;
 
 import android.content.Intent;
-import android.icu.text.LocaleDisplayNames;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -37,9 +36,6 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
     //    create empty list of cells
     private static final List<Cell> cellList = new ArrayList<>(0);
 
-    private TextView tvTime, tvPoints;
-
-
     static {
         cellList.add(new Cell("Löwe", R.drawable.lowe));
         cellList.add(new Cell("Igel", R.drawable.igel));
@@ -55,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
         cellList.add(new Cell("Reh", R.drawable.reh));
     }
 
-
+    private TextView tvTime, tvPoints;
     private CardLanguage cardLanguage;
     private SoundPlayer soundPlayer;
     private RelativeLayout appBar;
@@ -74,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
     private RecyclerView recycler;
     private TimeKeeper timeKeeper;
     private Handler handler;
+    private long second;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,8 +127,6 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
         handler = new Handler();
     }
 
-
-
     private <T> void shuffle(List<T> arrayList) {
         Random random = new Random(System.currentTimeMillis());
         int randomNumber;
@@ -177,6 +172,7 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
                     mExplosionField.explode(firstCard);
                     mExplosionField.explode(secondCard);
                     if (rightGuesses == cellList.size() / 2) {
+                        timeKeeper.cancel();
                         firstCard.setOnClickListener(null);
                         secondCard.setOnClickListener(null);
                         soundPlayer.makeSoundGameCompleted();
@@ -194,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
                                 startActivity(lastScreenIntent);
                                 finish();
                             }
-                        },1500);
+                        }, 1000);
 
                     } else {
                         soundPlayer.makeSoundSuccess();
@@ -212,7 +208,6 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
         }
     }
 
-private long second;
     @Override
     public void onTimeUpdate(final long seconds) {
         this.second = seconds;

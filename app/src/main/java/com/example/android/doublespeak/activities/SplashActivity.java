@@ -20,13 +20,12 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-//        SoundPlayer.Sound.
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 proceed();
             }
-        }, 1000);
+        }, 3000);
     }
 
 
