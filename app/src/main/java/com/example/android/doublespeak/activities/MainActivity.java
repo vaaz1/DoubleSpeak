@@ -50,9 +50,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private long startTime;
     private CardView firstCard;
     private CardView secondCard;
-    private  TimeKeeper timeKeeper;
+    private TimeKeeper timeKeeper;
     private ExplosionField mExplosionField;
-
 
 
     @Override
@@ -64,10 +63,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initArray(arrayListEasyLevel, currentLevelData);
         shuffle(currentLevelData);
         int position = 0;
+        mExplosionField = ExplosionField.attach2Window(this);
         CardView.LayoutParams imageParam = new FrameLayout.LayoutParams(100, 100, Gravity.CENTER);
         GridLayout.LayoutParams cardParam = new GridLayout.LayoutParams(GridLayout.spec(0, 0.0F), GridLayout.spec(0, 0.0F));
-        LinearLayout.LayoutParams adrowParams = new LinearLayout.LayoutParams( ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
-        TableLayout.LayoutParams rowParam = new TableLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,1);
+        LinearLayout.LayoutParams adrowParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+        TableLayout.LayoutParams rowParam = new TableLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
         timeKeeper = new TimeKeeper(this, TIME_LIMIT1);
         for (int i = 0; i < 3; i++) {
 
@@ -162,16 +162,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         firstCard.setOnClickListener(null);
                         secondCard.setOnClickListener(null);
                         soundPlayer.makeSoundGameCompleted();
-                    }else{
+                    } else {
                         soundPlayer.makeSoundSuccess();
                     }
-                }else{
+                } else {
                     soundPlayer.makeSoundFail();
                     mExplosionField.explode(firstCard);
                     mExplosionField.explode(secondCard);
                 }
-                    firstCard.setOnClickListener(this);
-                    firstCard = null;
+                firstCard.setOnClickListener(this);
+                firstCard = null;
 
             }
         } catch (Exception e) {
@@ -181,7 +181,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onTimeUpdate(long seconds) {
-        seconds = seconds;
     }
 
     @Override
