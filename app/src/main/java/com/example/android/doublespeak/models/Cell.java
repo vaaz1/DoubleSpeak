@@ -3,11 +3,7 @@ package com.example.android.doublespeak.models;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 
-/**
- * Created by roman on 15/03/2018.
- */
-
-public final class Cell {
+public final class Cell implements Cloneable {
     @NonNull
     private final String animal;
     private final  @DrawableRes int imageRes;
@@ -24,6 +20,12 @@ public final class Cell {
     public Cell(@NonNull String animal, int imageRes) {
         this.animal = animal;
         this.imageRes = imageRes;
+    }
+
+    public Cell(@NonNull String animal, int imageRes,ModeCell modeCell) {
+        this.animal = animal;
+        this.imageRes = imageRes;
+        this.modeCell = modeCell;
     }
 
     public int getImageRes() {
@@ -51,5 +53,16 @@ public final class Cell {
             return this.getImageRes() == ((Cell) obj).getImageRes();
         }
         return false;
+    }
+    private boolean firstClone = false;
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        firstClone = !firstClone;
+        if (firstClone) {
+            return new Cell(getAnimal(),getImageRes(),ModeCell.IsText);
+        }else{
+            return new Cell(getAnimal(),getImageRes(),ModeCell.IsImage);
+
+        }
     }
 }

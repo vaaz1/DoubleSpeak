@@ -102,9 +102,13 @@
             android:id="@+id/btTryAgain"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
-            android:padding="10dp"
+            android:textColor="#fff"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:onClick="tryAgain"
             android:layout_height="wrap_content"
-            android:text="Try again"
+            android:text="Restart"
+            android:textAllCaps="false"
             android:textSize="@dimen/typography_body2"/>
     </RelativeLayout>
 

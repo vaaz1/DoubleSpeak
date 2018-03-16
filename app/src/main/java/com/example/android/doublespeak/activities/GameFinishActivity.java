@@ -3,13 +3,12 @@ package com.example.android.doublespeak.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.android.doublespeak.R;
 
-/**
- * Created by Vera on 16.03.2018.
- */
+
 
 public class GameFinishActivity extends AppCompatActivity {
 
@@ -49,8 +48,7 @@ public class GameFinishActivity extends AppCompatActivity {
         finishTextView.setText(text_win_lose);
     }
 
-    @Override
-    public void onBackPressed() {
+    public void tryAgain(View view) {
         startActivity(new Intent(this,MainActivity.class));
         finish();
     }

@@ -88,13 +88,19 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
     }
 
     private void initArray() {
+        try {
+
+
         List<Cell> cells = new ArrayList<>();
         for (int i = 0; i < cellList.size(); i += 2) {
-            cells.add(i, cellList.get(i / 2));
-            cells.add(i + 1, cellList.get(i / 2));
+            cells.add(i, ((Cell) cellList.get(i / 2).clone()));
+            cells.add(i + 1, ((Cell) cellList.get(i / 2).clone()));
         }
         cellList.clear();
         cellList.addAll(cells);
+        }catch (Exception e){
+
+        }
     }
 
     private void initRecyclerView() {
@@ -145,7 +151,6 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
         // Use bounce interpolator with amplitude 0.2 and frequency 20
         MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 10);
         myAnim.setInterpolator(interpolator);
-
         view.startAnimation(myAnim);
 
         try {
