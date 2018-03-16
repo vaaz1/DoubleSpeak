@@ -1,7 +1,9 @@
 package com.example.android.doublespeak.activities;
 
 import android.content.Intent;
+import android.icu.text.LocaleDisplayNames;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.android.doublespeak.R;
 import com.example.android.doublespeak.carddata.Animal;
@@ -33,6 +36,9 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
     private static final int NUM_OF_COLUMNS = 4;
     //    create empty list of cells
     private static final List<Cell> cellList = new ArrayList<>(0);
+
+    private TextView tvTime, tvPoints;
+
 
     static {
         cellList.add(new Cell("Löwe", R.drawable.lowe));
@@ -67,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
     private ExplosionField mExplosionField;
     private RecyclerView recycler;
     private TimeKeeper timeKeeper;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +108,8 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
     private void initViews() {
         recycler = findViewById(R.id.game_grid);
         appBar = findViewById(R.id.game_bar);
+        tvTime = findViewById(R.id.tvTime);
+        tvPoints = findViewById(R.id.tvPoints);
     }
 
     private void initObjects() {
@@ -112,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
         textSayEndListener = new TextSayEndListener();
         timeKeeper = new TimeKeeper(this, TIME_LIMIT);
         mExplosionField = ExplosionField.attach2Window(this);
+        handler = new Handler();
     }
 
 
@@ -158,24 +168,28 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
                 //textSayEndListener.setSame(isSame);
                 if (isSame) {
                     rightGuesses++;
+                    tvPoints.setText("points : " + rightGuesses * 10);
                     mExplosionField.explode(firstCard);
                     mExplosionField.explode(secondCard);
                     if (rightGuesses == cellList.size() / 2) {
                         firstCard.setOnClickListener(null);
                         secondCard.setOnClickListener(null);
                         soundPlayer.makeSoundGameCompleted();
-                        long endTime = System.currentTimeMillis()-startTime;
-                        String yourTime = String.valueOf(endTime / 1000);
-                        int countTry = counter / 2;
-                        int points = (countTry*1000/(int)endTime); //?
-                        String winMessage = "Level completed!";
-                        Intent lastScreenIntent = new Intent (this, GameFinishActivity.class);
-                        lastScreenIntent.putExtra("time", String.valueOf(endTime/1000));
-                        lastScreenIntent.putExtra("points",String.valueOf(points));
-                        lastScreenIntent.putExtra("tries", String.valueOf(countTry));
-                        lastScreenIntent.putExtra("win_lose", winMessage);
-                        startActivity(lastScreenIntent);
-
+                        final long endTime = System.currentTimeMillis()-startTime;
+                        final int countTry = counter / 2;
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                String winMessage = "Level completed!";
+                                Intent lastScreenIntent = new Intent (MainActivity.this, GameFinishActivity.class);
+                                lastScreenIntent.putExtra("time", String.valueOf(endTime/1000));
+                                lastScreenIntent.putExtra("points",String.valueOf(rightGuesses * 10));
+                                lastScreenIntent.putExtra("tries", String.valueOf(countTry));
+                                lastScreenIntent.putExtra("win_lose", winMessage);
+                                startActivity(lastScreenIntent);
+                                finish();
+                            }
+                        },1500);
 
                     } else {
                         soundPlayer.makeSoundSuccess();
@@ -193,15 +207,36 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
         }
     }
 
-
+private long second;
     @Override
-    public void onTimeUpdate(long seconds) {
+    public void onTimeUpdate(final long seconds) {
+        this.second = seconds;
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                tvTime.setText("time: " + Long.toString(second) + " sec");
 
+            }
+        });
     }
 
     @Override
     public void onTimerEnded() {
-
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                long endTime = System.currentTimeMillis() - startTime;
+                int countTry = counter / 2;
+                String winMessage = "Game over!";
+                Intent lastScreenIntent = new Intent (MainActivity.this, GameFinishActivity.class);
+                lastScreenIntent.putExtra("time", "time over");
+                lastScreenIntent.putExtra("points",String.valueOf(rightGuesses * 10));
+                lastScreenIntent.putExtra("tries", String.valueOf(countTry));
+                lastScreenIntent.putExtra("win_lose", winMessage);
+                startActivity(lastScreenIntent);
+                finish();
+            }
+        });
     }
 
     private class TextSayEndListener implements TextSay.TextSayEndListener {

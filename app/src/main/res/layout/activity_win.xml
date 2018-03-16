@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/material_mountain" />
+        android:src="@drawable/bg_victory" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -34,9 +34,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/win_screen_title"
             android:padding="@dimen/layout_content_divider"
+            android:text="Your Time:"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/typography_body2"
-            android:text="Your Time:" />
+            android:textSize="@dimen/typography_body2" />
 
         <TextView
             android:id="@+id/time_score"
@@ -55,9 +55,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/time_title"
             android:padding="@dimen/layout_content_divider"
+            android:text="Points:"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/typography_body2"
-            android:text="Points:" />
+            android:textSize="@dimen/typography_body2" />
 
         <TextView
             android:id="@+id/word_number_score"
@@ -76,9 +76,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/word_number_title"
             android:padding="@dimen/layout_content_divider"
+            android:text="Number of tries:"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/typography_body2"
-            android:text="Number of tries:" />
+            android:textSize="@dimen/typography_body2" />
 
         <TextView
             android:id="@+id/tries_number_score"
