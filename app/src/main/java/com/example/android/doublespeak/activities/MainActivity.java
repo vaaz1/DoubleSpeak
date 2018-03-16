@@ -1,5 +1,6 @@
 package com.example.android.doublespeak.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -152,9 +153,18 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
                         firstCard.setOnClickListener(null);
                         secondCard.setOnClickListener(null);
                         soundPlayer.makeSoundGameCompleted();
-                        long endTime = startTime - System.currentTimeMillis();
-                        String second = String.valueOf(endTime / 1000);
+                        long endTime = System.currentTimeMillis()-startTime;
+                        String yourTime = String.valueOf(endTime / 1000);
                         int countTry = counter / 2;
+                        int points = (countTry*1000/(int)endTime); //?
+                        String winMessage = "Level completed!";
+                        Intent lastScreenIntent = new Intent (this, GameFinishActivity.class);
+                        lastScreenIntent.putExtra("time", String.valueOf(endTime/1000));
+                        lastScreenIntent.putExtra("points",String.valueOf(points));
+                        lastScreenIntent.putExtra("tries", String.valueOf(countTry));
+                        lastScreenIntent.putExtra("win_lose", winMessage);
+                        startActivity(lastScreenIntent);
+
 
                     } else {
                         soundPlayer.makeSoundSuccess();
@@ -175,6 +185,7 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
 
     @Override
     public void onTimeUpdate(long seconds) {
+
     }
 
     @Override

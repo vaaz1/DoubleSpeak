@@ -24,7 +24,7 @@ public class Animal extends CardLanguage {
         addEasyLanguages("Affe");
         addEasyLanguages("Kuh");
         addEasyLanguages("Esel");
-        addEasyLanguages("Raupe");
+        addEasyLanguages("Taube");
         addEasyLanguages("Pfau");
         addEasyLanguages("Hai");
         addEasyLanguages("Reh");

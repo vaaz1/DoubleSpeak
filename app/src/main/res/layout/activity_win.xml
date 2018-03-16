@@ -36,7 +36,7 @@
             android:padding="@dimen/layout_content_divider"
             android:textColor="@android:color/white"
             android:textSize="@dimen/typography_body2"
-            tools:text="Your Time:" />
+            android:text="Your Time:" />
 
         <TextView
             android:id="@+id/time_score"
@@ -47,7 +47,7 @@
             android:padding="@dimen/layout_content_divider"
             android:textColor="@android:color/white"
             android:textSize="@dimen/typography_body2"
-            tools:text="2 min 32 sec" />
+            tools:text="32 sec" />
 
         <TextView
             android:id="@+id/word_number_title"
@@ -57,7 +57,7 @@
             android:padding="@dimen/layout_content_divider"
             android:textColor="@android:color/white"
             android:textSize="@dimen/typography_body2"
-            tools:text="Number of words:" />
+            android:text="Points:" />
 
         <TextView
             android:id="@+id/word_number_score"
@@ -78,7 +78,7 @@
             android:padding="@dimen/layout_content_divider"
             android:textColor="@android:color/white"
             android:textSize="@dimen/typography_body2"
-            tools:text="Number of tries:" />
+            android:text="Number of tries:" />
 
         <TextView
             android:id="@+id/tries_number_score"
