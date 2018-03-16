@@ -7,10 +7,18 @@
     android:gravity="center"
     tools:context=".activities.SplashActivity">
 
+    <!--<ImageView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:src="@drawable/logo_final"/>-->
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animation_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/horizontal_screen_edge_content_margin"
+        android:padding="@dimen/horizontal_screen_edge_content_margin"
         app:lottie_autoPlay="true"
         app:lottie_fileName="loading.json"
         app:lottie_loop="true" />
