@@ -62,13 +62,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initObjects();
         initArray(arrayListEasyLevel, currentLevelData);
         shuffle(currentLevelData);
+        buildScreen();
+    }
+
+    private void buildScreen() {
         int position = 0;
-        mExplosionField = ExplosionField.attach2Window(this);
         CardView.LayoutParams imageParam = new FrameLayout.LayoutParams(100, 100, Gravity.CENTER);
         GridLayout.LayoutParams cardParam = new GridLayout.LayoutParams(GridLayout.spec(0, 0.0F), GridLayout.spec(0, 0.0F));
         LinearLayout.LayoutParams adrowParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
         TableLayout.LayoutParams rowParam = new TableLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
-        timeKeeper = new TimeKeeper(this, TIME_LIMIT1);
         for (int i = 0; i < 3; i++) {
 
             TableRow tableRow = new TableRow(this);
@@ -109,6 +111,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         arrayListEasyLevel = cardLanguage.getArrayListEasyLevel();
         currentLevelData = new ArrayList<>(arrayListEasyLevel.size() * 2);
         textSayEndListener = new TextSayEndListener();
+        mExplosionField = ExplosionField.attach2Window(this);
+        timeKeeper = new TimeKeeper(this, TIME_LIMIT1);
+
     }
 
     private void initArray(List<CardLanguage.TranslateImage> arrayListLevel, List<CardLanguage.TranslateImage> currentLevelData) {
