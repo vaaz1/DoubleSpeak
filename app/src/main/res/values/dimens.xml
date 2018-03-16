@@ -27,7 +27,7 @@
     <dimen name="app_bar_horizontal_padding">16dp</dimen>
     <dimen name="app_bar_icon_padding">16dp</dimen>
     <dimen name="app_bar_title_left_padding">72dp</dimen>
-    <dimen name="app_bar_title_bottom_padding">20dp</dimen>
+    u
 
     <!-- subtitle component below appbar-->
     <dimen name="layout_vertical_spacing_subtitle">48dp</dimen>
