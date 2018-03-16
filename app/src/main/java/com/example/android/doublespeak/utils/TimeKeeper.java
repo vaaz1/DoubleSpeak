@@ -8,40 +8,46 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-/**
- * Created by roman on 16/03/2018.
- */
+
 
 public final class TimeKeeper {
-    private static long timeLimit;
+    private long timeLimit;
     private final WeakReference<TimerCallback> callback;
     private final Timer timer;
     private long initialTime;
-    private long elapsedtime;
+    private long elapsedTime;
 
 
-    public static void setTimeLimit(long timeLimit) {
-        TimeKeeper.timeLimit = timeLimit;
-    }
 
-    public TimeKeeper(@NonNull final TimerCallback callback) {
-        this.initialTime = SystemClock.elapsedRealtime();
+    public TimeKeeper(@NonNull TimerCallback callback,long timeLimit) {
+        this.timeLimit = timeLimit;
         this.timer = new Timer();
         this.callback = new WeakReference<>(callback);
 
+
+    }
+
+
+    public void start(){
         // Update the elapsed time every second.
+        this.initialTime = SystemClock.elapsedRealtime();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                elapsedtime = (SystemClock.elapsedRealtime() - initialTime) / 1000;
-                long remainingTime = TimeKeeper.timeLimit - elapsedtime;
-                if (TimeKeeper.this.callback.get() == null) {
+                elapsedTime = (SystemClock.elapsedRealtime() - initialTime) / 1000;
+                long remainingTime = timeLimit - elapsedTime;
+                if (remainingTime < 0){
+                    remainingTime *= -1;
+                }
+                if (callback.get() == null) {
                     timer.cancel();
                     timer.purge();
-                } else if (remainingTime != 0) {
-                    TimeKeeper.this.callback.get().onTimeUpdate(remainingTime);
+                } else if (remainingTime > 0) {
+                    callback.get().onTimeUpdate(remainingTime);
                 } else {
-                    TimeKeeper.this.callback.get().onTimerEnded();
+                    callback.get().onTimerEnded();
+                    timer.cancel();
+                    timer.purge();
                 }
             }
         }, 1000, 1000);

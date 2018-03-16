@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.TextView;
 
 import com.example.android.doublespeak.R;
 import com.example.android.doublespeak.carddata.Animal;
@@ -32,6 +31,7 @@ import tyrantgit.explosionfield.ExplosionField;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, TimeKeeper.TimerCallback {
 
     public static final int TIME_LIMIT = 30;
+    public static final int TIME_LIMIT1 = 30;
     private List<CardLanguage.TranslateImage> arrayListEasyLevel;
     private List<CardLanguage.TranslateImage> currentLevelData;
     private CardLanguage cardLanguage;
@@ -50,7 +50,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private long startTime;
     private CardView firstCard;
     private CardView secondCard;
+    private  TimeKeeper timeKeeper;
     private ExplosionField mExplosionField;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +64,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initArray(arrayListEasyLevel, currentLevelData);
         shuffle(currentLevelData);
         int position = 0;
-        TimeKeeper.setTimeLimit(TIME_LIMIT);
-        mExplosionField=ExplosionField.attach2Window(this);
         CardView.LayoutParams imageParam = new FrameLayout.LayoutParams(100, 100, Gravity.CENTER);
         GridLayout.LayoutParams cardParam = new GridLayout.LayoutParams(GridLayout.spec(0, 0.0F), GridLayout.spec(0, 0.0F));
         LinearLayout.LayoutParams adrowParams = new LinearLayout.LayoutParams( ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
         TableLayout.LayoutParams rowParam = new TableLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,1);
-
+        timeKeeper = new TimeKeeper(this, TIME_LIMIT1);
         for (int i = 0; i < 3; i++) {
 
             TableRow tableRow = new TableRow(this);
@@ -139,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (counter == 1) {
                 // First click app
                 startTime = System.currentTimeMillis();
+                timeKeeper.start();
             }
 
             if (firstCard == null) {
@@ -160,17 +162,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         firstCard.setOnClickListener(null);
                         secondCard.setOnClickListener(null);
                         soundPlayer.makeSoundGameCompleted();
-                        long endTime = startTime - System.currentTimeMillis();
-                        String second = String.valueOf(endTime/1000);
-                        int countTry = counter/2;
-
                     }else{
                         soundPlayer.makeSoundSuccess();
-                        mExplosionField.explode(firstCard);
-                        mExplosionField.explode(secondCard);
                     }
                 }else{
                     soundPlayer.makeSoundFail();
+                    mExplosionField.explode(firstCard);
+                    mExplosionField.explode(secondCard);
                 }
                     firstCard.setOnClickListener(this);
                     firstCard = null;
@@ -183,6 +181,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onTimeUpdate(long seconds) {
+        seconds = seconds;
     }
 
     @Override

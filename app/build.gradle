@@ -20,14 +20,14 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
     //explosion anim
-    compile 'tyrantgit:explosionfield:1.0.1'
+    implementation 'tyrantgit:explosionfield:1.0.1'
 
 
     // Glide image and gif loading library
@@ -37,8 +37,8 @@ dependencies {
     implementation 'com.android.support:cardview-v7:26.1.0'
 
     // Lottie animations library
-    compile 'com.airbnb.android:lottie:2.5.0'
+    implementation 'com.airbnb.android:lottie:2.5.0'
 
     // Snow animation library
-    compile 'com.github.jetradarmobile:android-snowfall:1.2.0'
+    implementation 'com.github.jetradarmobile:android-snowfall:1.2.0'
 }
