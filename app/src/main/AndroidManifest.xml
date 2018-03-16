@@ -24,6 +24,7 @@
         <activity
             android:name=".activities.MainActivity"
             android:screenOrientation="landscape"></activity>
+        <activity android:name=".activities.GameFinishActivity" />
     </application>
 
 </manifest>

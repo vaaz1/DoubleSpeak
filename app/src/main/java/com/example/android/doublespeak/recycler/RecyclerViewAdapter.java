@@ -37,14 +37,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
     }
 
 
-
-
-
     @Override
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
         holder.itemView.setTag(position);
         Cell bookAtPosition = cellList.get(position);
-        Glide.with(context).load(bookAtPosition.getImageRes()).into(holder.image);
+        switch (bookAtPosition.getModeCell()) {
+            case IsImage:
+                Glide.with(context).load(bookAtPosition.getImageRes()).into(holder.image);
+                bookAtPosition.setModeCell(Cell.ModeCell.IsText);
+                break;
+            case IsText:
+                holder.tvText.setText(bookAtPosition.getAnimal());
+                bookAtPosition.setModeCell(Cell.ModeCell.IsImage);
+                break;
+        }
     }
 
     @Override

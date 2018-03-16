@@ -11,6 +11,12 @@ public final class Cell {
     @NonNull
     private final String animal;
     private final  @DrawableRes int imageRes;
+    private ModeCell modeCell = ModeCell.IsImage;
+
+
+    public enum ModeCell{
+        IsImage,IsText;
+    }
 
 
 
@@ -22,6 +28,14 @@ public final class Cell {
 
     public int getImageRes() {
         return imageRes;
+    }
+
+    public ModeCell getModeCell() {
+        return modeCell;
+    }
+
+    public void setModeCell(ModeCell modeCell) {
+        this.modeCell = modeCell;
     }
 
     @NonNull
