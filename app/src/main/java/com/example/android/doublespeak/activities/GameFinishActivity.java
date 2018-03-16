@@ -24,10 +24,11 @@ public class GameFinishActivity extends AppCompatActivity {
         setContentView(R.layout.activity_win);
 
         Intent intent = getIntent();
-        text_time = intent.getStringExtra("time");
+        text_time = intent.getStringExtra("time")+" sec";
         text_points = intent.getStringExtra("points");
         text_tries = intent.getStringExtra("tries");
         text_win_lose = intent.getStringExtra("win_lose");
+
 
 
         TextView timeTextView = findViewById(R.id.time_score);
