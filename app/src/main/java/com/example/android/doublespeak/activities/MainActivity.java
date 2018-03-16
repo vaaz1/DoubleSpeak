@@ -3,7 +3,9 @@ package com.example.android.doublespeak.activities;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -43,7 +45,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initArray(arrayListEasyLevel, currentLevelData);
         shuffle(currentLevelData);
         int position = 0;
+
+        CardView.LayoutParams imageParam = new FrameLayout.LayoutParams(100,100, Gravity.CENTER);
+        GridLayout.LayoutParams cardParam = new GridLayout.LayoutParams(GridLayout.spec(0,0.0F),GridLayout.spec(0,0.0F));
+
         for (int i = 0; i < 4; i++) {
+
             for (int j = 0; j < 3; j++) {
 //                create the grid cell card
                 CardView cardView = (CardView) View.inflate(this, R.layout.item_putin, null);
@@ -55,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 //                get the card imageView
                 ImageView imageInside = cardView.findViewById(R.id.card_image);
+                imageInside.setLayoutParams(imageParam);
 
 //                set the card image
                 Glide.with(this).load(currentLevelData.get(position).getImageRes()).into(imageInside);
@@ -88,8 +96,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initArray(List<CardLanguage.TranslateImage> arrayListLevel, List<CardLanguage.TranslateImage> currentLevelData) {
         for (int i = 0; i < arrayListLevel.size(); i += 2) {
-            currentLevelData.set(i, arrayListLevel.get(i / 2));
-            currentLevelData.set(i + 1, arrayListLevel.get(i / 2));
+            currentLevelData.add(i, arrayListLevel.get(i / 2));
+            currentLevelData.add(i + 1, arrayListLevel.get(i / 2));
         }
     }
 
