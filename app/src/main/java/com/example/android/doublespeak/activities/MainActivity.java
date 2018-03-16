@@ -32,18 +32,18 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
     private static final List<Cell> cellList = new ArrayList<>(0);
 
     static {
-        cellList.add(new Cell("Löwe", R.drawable.eagle));
-        cellList.add(new Cell("Igel", R.drawable.eagle));
-        cellList.add(new Cell("Adler", R.drawable.eagle));
-        cellList.add(new Cell("Fuchs", R.drawable.eagle));
-        cellList.add(new Cell("Eule", R.drawable.eagle));
-        cellList.add(new Cell("Affe", R.drawable.putin));
-        cellList.add(new Cell("Kuh", R.drawable.putin));
-        cellList.add(new Cell("Esel", R.drawable.putin));
-        cellList.add(new Cell("Taube", R.drawable.putin));
-        cellList.add(new Cell("Pfau", R.drawable.putin));
-        cellList.add(new Cell("Hai", R.drawable.putin));
-        cellList.add(new Cell("Reh", R.drawable.putin));
+        cellList.add(new Cell("Löwe", R.drawable.lowe));
+        cellList.add(new Cell("Igel", R.drawable.igel));
+        cellList.add(new Cell("Adler", R.drawable.adler));
+        cellList.add(new Cell("Fuchs", R.drawable.fuchs));
+        cellList.add(new Cell("Eule", R.drawable.eule));
+        cellList.add(new Cell("Affe", R.drawable.affe));
+        cellList.add(new Cell("Kuh", R.drawable.kuh));
+        cellList.add(new Cell("Esel", R.drawable.esel));
+        cellList.add(new Cell("Taube", R.drawable.taube));
+        cellList.add(new Cell("Pfau", R.drawable.pfau));
+        cellList.add(new Cell("Hai", R.drawable.hai));
+        cellList.add(new Cell("Reh", R.drawable.reh));
     }
 
 
@@ -208,7 +208,6 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
                     soundPlayer.makeSoundSuccess();
                 } else {
                     soundPlayer.makeSoundFail();
-
                 }
             } catch (IOException e) {
                 e.printStackTrace();
