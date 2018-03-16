@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 
 import com.example.android.doublespeak.R;
@@ -13,6 +15,7 @@ import com.example.android.doublespeak.carddata.Animal;
 import com.example.android.doublespeak.carddata.CardLanguage;
 import com.example.android.doublespeak.models.Cell;
 import com.example.android.doublespeak.recycler.RecyclerViewAdapter;
+import com.example.android.doublespeak.utils.MyBounceInterpolator;
 import com.example.android.doublespeak.utils.SoundPlayer;
 import com.example.android.doublespeak.utils.TextSay;
 import com.example.android.doublespeak.utils.TimeKeeper;
@@ -127,6 +130,14 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
 
     @Override
     public void onClick(View view) {
+        final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
+
+        // Use bounce interpolator with amplitude 0.2 and frequency 20
+        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 10);
+        myAnim.setInterpolator(interpolator);
+
+        view.startAnimation(myAnim);
+
         try {
             if (++counter == 1) {
                 startTime = System.currentTimeMillis();
