@@ -2,6 +2,9 @@
 
 <resources>
 
+    <!-- 160dp is 1 inch -->
+    <!--72pt is 1 inch -->
+
     <!-- Typography -->
     <dimen name="typography_button">15sp</dimen>
     <dimen name="typography_caption">13sp</dimen>

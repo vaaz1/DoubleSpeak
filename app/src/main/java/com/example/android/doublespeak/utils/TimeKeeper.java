@@ -1,40 +1,53 @@
 package com.example.android.doublespeak.utils;
 
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
+
+import java.lang.ref.WeakReference;
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 /**
  * Created by roman on 16/03/2018.
  */
 
-public class TimeKeeper {
-    private static volatile long mOffset = 0;
-    private static volatile long mServerTime = 0;
+public final class TimeKeeper {
+    private static final long TIME_LIMIT = 60;
+    private final WeakReference<TimerCallback> callback;
+    private final Timer timer;
+    private long initialTime;
+    private long elapsedtime;
 
-    private static TimeKeeper mOurInstance = new TimeKeeper();
+    public TimeKeeper(@NonNull final TimerCallback callback) {
+        this.initialTime = SystemClock.elapsedRealtime();
+        this.timer = new Timer();
+        this.callback = new WeakReference<>(callback);
 
-    private TimeKeeper() {
+        // Update the elapsed time every second.
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                elapsedtime = (SystemClock.elapsedRealtime() - initialTime) / 1000;
+                long remainingTime = TIME_LIMIT - elapsedtime;
+                if (TimeKeeper.this.callback.get() == null) {
+                    timer.cancel();
+                    timer.purge();
+                } else if (remainingTime != 0) {
+                    TimeKeeper.this.callback.get().onTimeUpdate(remainingTime);
+                } else {
+                    TimeKeeper.this.callback.get().onTimerEnded();
+                }
+            }
+        }, 1000, 1000);
     }
 
-    public static TimeKeeper getInstance() {
-        return mOurInstance;
+    public interface TimerCallback {
+
+        void onTimeUpdate(long seconds);
+
+        void onTimerEnded();
     }
 
-    //TODO: these are not thread safe, might not be a problem - but fix later anyway
-    public void setNewOffset(long serverTime) {
-        mOffset = serverTime - SystemClock.elapsedRealtime();
-        mServerTime = serverTime;
-    }
 
-    //TODO: these are not thread safe, might not be a problem - but fix later anyway
-    public long getTime() {
-        return SystemClock.elapsedRealtime() + mOffset;
-    }
-
-    public long getServerTime() {
-        return mServerTime;
-    }
-
-    public long getTimeOffset() {
-        return mOffset;
-    }
 }
