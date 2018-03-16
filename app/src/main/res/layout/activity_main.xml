@@ -22,7 +22,7 @@
         android:id="@+id/game_grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/layout_vertical_spacing_subtitle"
+        android:layout_marginTop="@dimen/horizontal_screen_edge_content_margin"
         android:orientation="vertical"
         android:paddingLeft="@dimen/horizontal_screen_edge_content_margin"
         android:paddingRight="@dimen/horizontal_screen_edge_content_margin"
