@@ -48,4 +48,10 @@ public class GameFinishActivity extends AppCompatActivity {
         triesTextView.setText(text_tries);
         finishTextView.setText(text_win_lose);
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this,MainActivity.class));
+        finish();
+    }
 }

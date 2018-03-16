@@ -28,7 +28,7 @@
             android:id="@+id/tvTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="time: 50 sec"
+            android:text="time: 30 sec"
             android:textSize="@dimen/typography_subheading"
             android:textColor="@android:color/black"
             android:layout_marginHorizontal="@dimen/horizontal_margin"/>
@@ -37,7 +37,7 @@
             android:id="@+id/tvPoints"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="points: 10"
+            android:text="points: 0"
             android:textSize="@dimen/typography_subheading"
             android:textColor="@android:color/black"
             android:layout_marginHorizontal="@dimen/horizontal_margin"/>
