@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.android.doublespeak.R;
 import com.example.android.doublespeak.carddata.Animal;
@@ -30,6 +31,9 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
     private static final int NUM_OF_COLUMNS = 4;
     //    create empty list of cells
     private static final List<Cell> cellList = new ArrayList<>(0);
+
+    private TextView tvTime, tvPoints;
+
 
     static {
         cellList.add(new Cell("Löwe", R.drawable.lowe));
@@ -98,6 +102,8 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
     private void initViews() {
         recycler = findViewById(R.id.game_grid);
         appBar = findViewById(R.id.game_bar);
+        tvTime = findViewById(R.id.tvTime);
+        tvPoints = findViewById(R.id.tvPoints);
     }
 
     private void initObjects() {
@@ -185,11 +191,24 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
 
     @Override
     public void onTimeUpdate(long seconds) {
-
+        tvTime.setText("time: " + seconds + " sec");
     }
 
     @Override
     public void onTimerEnded() {
+        long endTime = System.currentTimeMillis() - startTime;
+        String yourTime = String.valueOf(endTime / 1000);
+        int countTry = counter / 2;
+        String winMessage = "Game over!";
+        Intent lastScreenIntent = new Intent (this, GameFinishActivity.class);
+        lastScreenIntent.putExtra("time", String.valueOf(endTime/1000));
+        lastScreenIntent.putExtra("points",String.valueOf(rightGuesses));
+        lastScreenIntent.putExtra("tries", String.valueOf(countTry));
+        lastScreenIntent.putExtra("win_lose", winMessage);
+        startActivity(lastScreenIntent);
+
+
+
 
     }
 
