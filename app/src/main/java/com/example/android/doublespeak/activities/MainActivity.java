@@ -11,8 +11,9 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 
-import com.bumptech.glide.Glide;
 import com.example.android.doublespeak.R;
 import com.example.android.doublespeak.carddata.Animal;
 import com.example.android.doublespeak.carddata.CardLanguage;
@@ -27,6 +28,7 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, TimeKeeper.TimerCallback {
 
+    public static final int TIME_LIMIT = 30;
     private List<CardLanguage.TranslateImage> arrayListEasyLevel;
     private List<CardLanguage.TranslateImage> currentLevelData;
     private CardLanguage cardLanguage;
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CardLanguage.TypeLanguages currentTypeLanguage;
     private TextSay.LocaleLanguage currentLocalLanguage;
     private RelativeLayout appBar;
-    private LinearLayout mainLinearLayoutGame;
+    private TableLayout mainGameTableLayout;
     private TextSayEndListener textSayEndListener;
     private int rightGuesses;
     private boolean animIsRunning;
@@ -119,16 +121,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initArray(arrayListEasyLevel, currentLevelData);
         shuffle(currentLevelData);
         int position = 0;
+        TimeKeeper.setTimeLimit(TIME_LIMIT);
 
         CardView.LayoutParams imageParam = new FrameLayout.LayoutParams(100, 100, Gravity.CENTER);
         GridLayout.LayoutParams cardParam = new GridLayout.LayoutParams(GridLayout.spec(0, 0.0F), GridLayout.spec(0, 0.0F));
-        LinearLayout.LayoutParams rowParams = new LinearLayout.LayoutParams( ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
-
+        LinearLayout.LayoutParams adrowParams = new LinearLayout.LayoutParams( ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+        TableLayout.LayoutParams rowParam = new TableLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,1);
 
         for (int i = 0; i < 3; i++) {
-            LinearLayout row = new LinearLayout(this);
-            row.setOrientation(LinearLayout.VERTICAL);
-            row.setLayoutParams(rowParams);
+
+            TableRow tableRow = new TableRow(this);
+            tableRow.setLayoutParams(rowParam);
             for (int j = 0; j < 4; j++) {
 //                create the grid cell card
                 CardView cardView = (CardView) View.inflate(this, R.layout.item_putin, null);
@@ -138,20 +141,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                get the card imageView
                 ImageView imageInside = cardView.findViewById(R.id.card_image);
                 //imageInside.setLayoutParams(imageParam);
+                tableRow.addView(cardView);
 
 //                set the card image
                 imageInside.setImageResource(R.drawable.material_mountain);
                 //Glide.with(this).load(currentLevelData.get(position).getImageRes()).into(imageInside);
                 position++;
-                row.addView(cardView);
 
             }
-            mainLinearLayoutGame.addView(row);
+            mainGameTableLayout.addView(tableRow);
         }
+        mainGameTableLayout.invalidate();
     }
 
     private void initViews() {
-        mainLinearLayoutGame = findViewById(R.id.mainLinearLayoutGame);
+        mainGameTableLayout = findViewById(R.id.mainGameTableLayout);
         appBar = findViewById(R.id.game_bar);
 
 
@@ -203,23 +207,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 firstCard = (CardView) view;
                 firstCard.setOnClickListener(null);
                 firstPosition = ((int) firstCard.getTag());
+                textSay.setTextSayEndListener(null);
                 textSay.say(currentLocalLanguage, cardLanguage.getLanguage(currentTypeLanguage, firstPosition));
-
             } else {
                 secondCard = ((CardView) view);
                 otherPosition = ((int) secondCard.getTag());
-                textSay.say(currentLocalLanguage, cardLanguage.getLanguage(currentTypeLanguage, otherPosition));
+                //textSay.say(currentLocalLanguage, cardLanguage.getLanguage(currentTypeLanguage, otherPosition));
+                //textSay.setTextSayEndListener(textSayEndListener);
                 boolean isSame = CardLanguage.isSameData(arrayListEasyLevel.get(firstPosition), arrayListEasyLevel.get(otherPosition));
-                textSayEndListener.setSame(isSame);
-                textSay.setTextSayEndListener(textSayEndListener);
+                //textSayEndListener.setSame(isSame);
                 if (isSame) {
                     rightGuesses++;
                     if (rightGuesses == currentLevelData.size() / 2) {
+                        firstCard.setOnClickListener(null);
+                        secondCard.setOnClickListener(null);
                         soundPlayer.makeSoundGameCompleted();
+                    }else{
+                        soundPlayer.makeSoundSuccess();
                     }
+                }else{
+                    soundPlayer.makeSoundFail();
                 }
-                firstCard.setOnClickListener(this);
-                firstCard = null;
+                    firstCard.setOnClickListener(this);
+                    firstCard = null;
+
             }
         } catch (Exception e) {
             e.getStackTrace();
