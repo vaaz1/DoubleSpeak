@@ -39,7 +39,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
 
         Glide
                 .with(context)
-                .load(R.drawable.moose)
+                .load(R.drawable.moose_transp)
                 .into(holder.image);
     }
 
