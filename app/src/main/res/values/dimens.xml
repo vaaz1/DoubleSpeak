@@ -22,7 +22,7 @@
 
     <!-- status bar and app bar -->
     <dimen name="layout_status_bar_height">24dp</dimen>
-    <!-- TODO: 48dp for mobile landscape, ??? for tablet -->
+    <!-- TODO: 48dp for mobile landscape, 56dp for tablet -->
     <dimen name="app_bar_height">56dp</dimen>
     <dimen name="app_bar_horizontal_padding">16dp</dimen>
     <dimen name="app_bar_icon_padding">16dp</dimen>

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.android.doublespeak.activities.MainActivity">
+    tools:context="com.doublespeak.android.doublespeak.activities.MainActivity">
 
     <!-- background placeholder -->
     <ImageView
@@ -102,13 +102,13 @@
             android:id="@+id/btTryAgain"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
-            android:textColor="#fff"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:onClick="tryAgain"
             android:layout_height="wrap_content"
+            android:onClick="tryAgain"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
             android:text="Restart"
             android:textAllCaps="false"
+            android:textColor="#fff"
             android:textSize="@dimen/typography_body2"/>
     </RelativeLayout>
 

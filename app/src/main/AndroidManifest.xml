@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.doublespeak">
+    package="com.doublespeak.android.doublespeak">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <application
@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".activities.SplashActivity"
+            android:name="com.doublespeak.android.doublespeak.activities.SplashActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,9 +22,9 @@
         </activity>
 
         <activity
-            android:name=".activities.MainActivity"
+            android:name="com.doublespeak.android.doublespeak.activities.MainActivity"
             android:screenOrientation="landscape"></activity>
-        <activity android:name=".activities.GameFinishActivity" />
+        <activity android:name="com.doublespeak.android.doublespeak.activities.GameFinishActivity" />
     </application>
 
 </manifest>
