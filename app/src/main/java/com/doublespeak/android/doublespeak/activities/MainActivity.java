@@ -151,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
 
     @Override
     public void onClick(View currentCardClicked) {
+        currentCardClicked.setOnClickListener(null);
         Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
         // Use bounce interpolator with amplitude 0.2 and frequency 20
         myAnim.setInterpolator(interpolator);
@@ -191,6 +192,7 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
 
                     }
                 } else {
+                    currentCardClicked.setOnClickListener(this);
                     soundPlayer.makeSoundFail();
                     firstCard.setOnClickListener(this);
                 }
