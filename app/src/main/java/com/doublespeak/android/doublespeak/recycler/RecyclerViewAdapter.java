@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.doublespeak.android.doublespeak.R;
 import com.doublespeak.android.doublespeak.models.Cell;
+import com.example.android.doublespeak.R;
 
 import java.util.List;
 
@@ -19,19 +19,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
     private List<Cell> cellList;
     private Context context;
     private View.OnClickListener onClickListener;
+    private LayoutInflater layoutInflater;
+
 
     public RecyclerViewAdapter(Context context, List<Cell> bookList) {
         this.onClickListener = ((View.OnClickListener) context);
         this.cellList = bookList;
         this.context = context;
+        this.layoutInflater = LayoutInflater.from(context);
     }
 
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card, null);
-        layoutView.setOnClickListener(onClickListener);
-        RecyclerViewHolder recyclerViewHolder = new RecyclerViewHolder(layoutView);
-        return recyclerViewHolder;
+        View cardView = layoutInflater.inflate(R.layout.item_card, parent, false);
+        cardView.setOnClickListener(onClickListener);
+        return new RecyclerViewHolder(cardView);
     }
 
 
@@ -42,18 +44,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
         switch (bookAtPosition.getModeCell()) {
             case IsImage:
                 Glide.with(context).load(bookAtPosition.getImageRes()).into(holder.image);
-                bookAtPosition.setModeCell(Cell.ModeCell.IsText);
                 break;
             case IsText:
                 holder.tvText.setText(bookAtPosition.getAnimal());
-                bookAtPosition.setModeCell(Cell.ModeCell.IsImage);
                 break;
         }
     }
 
     @Override
     public int getItemCount() {
-        return this.cellList.size();
+        return cellList.size();
     }
 
 }

@@ -9,20 +9,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.doublespeak.android.doublespeak.R;
-import com.doublespeak.android.doublespeak.carddata.Animal;
-import com.doublespeak.android.doublespeak.carddata.CardLanguage;
 import com.doublespeak.android.doublespeak.models.Cell;
 import com.doublespeak.android.doublespeak.recycler.RecyclerViewAdapter;
 import com.doublespeak.android.doublespeak.utils.MyBounceInterpolator;
 import com.doublespeak.android.doublespeak.utils.SoundPlayer;
 import com.doublespeak.android.doublespeak.utils.TextSay;
 import com.doublespeak.android.doublespeak.utils.TimeKeeper;
+import com.example.android.doublespeak.R;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -35,6 +31,13 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
     private static final int NUM_OF_COLUMNS = 4;
     //    create empty list of cells
     private static final List<Cell> cellList = new ArrayList<>(0);
+    public static final String TIME = "time";
+    public static final String POINTS = "points";
+    public static final String TRIES = "tries";
+    public static final String WIN_LOSE = "win_lose";
+
+    private TextView tvTime, tvPoints;
+
 
     static {
         cellList.add(new Cell("Löwe", R.drawable.lowe));
@@ -51,26 +54,26 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
         cellList.add(new Cell("Reh", R.drawable.reh));
     }
 
-    private TextView tvTime, tvPoints;
-    private CardLanguage cardLanguage;
     private SoundPlayer soundPlayer;
-    private RelativeLayout appBar;
     private TextSay textSay;
-    private CardLanguage.TypeLanguages currentTypeLanguage;
     private TextSay.LocaleLanguage currentLocalLanguage;
-    private TextSayEndListener textSayEndListener;
-    private int rightGuesses;
     private int firstPosition;
-    private int otherPosition;
+    private int rightGuesses;
     private int counter;
-    private long startTime;
+    private long startTime, endTime, second;
     private View firstCard;
-    private View secondCard;
     private ExplosionField mExplosionField;
     private RecyclerView recycler;
     private TimeKeeper timeKeeper;
     private Handler handler;
-    private long second;
+    private Animation myAnim;
+    private MyBounceInterpolator interpolator;
+    private Runnable updateSecondTextRunnable = new Runnable() {
+        @Override
+        public void run() {
+            tvTime.setText(String.format("time: %s sec", Long.toString(second)));
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,32 +89,27 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
 
     private void initArray() {
         try {
-
-
-        List<Cell> cells = new ArrayList<>();
-        for (int i = 0; i < cellList.size(); i += 2) {
-            cells.add(i, ((Cell) cellList.get(i / 2).clone()));
-            cells.add(i + 1, ((Cell) cellList.get(i / 2).clone()));
-        }
-        cellList.clear();
-        cellList.addAll(cells);
-        }catch (Exception e){
+            List<Cell> cells = new ArrayList<>();
+            for (int i = 0; i < cellList.size(); i += 2) {
+                cells.add(i, ((Cell) cellList.get(i / 2).clone()).setModeCell(Cell.ModeCell.IsText));
+                cells.add(i + 1, ((Cell) cellList.get(i / 2).clone()).setModeCell(Cell.ModeCell.IsImage));
+            }
+            cellList.clear();
+            cellList.addAll(cells);
+        } catch (Exception ignore) {
 
         }
     }
 
     private void initRecyclerView() {
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, NUM_OF_COLUMNS);
-        recycler.setNestedScrollingEnabled(false);
         recycler.setHasFixedSize(true);
-        recycler.setLayoutManager(gridLayoutManager);
-        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(this, cellList);
-        recycler.setAdapter(recyclerViewAdapter);
+        recycler.setLayoutManager(new GridLayoutManager(this, NUM_OF_COLUMNS));
+        recycler.setAdapter(new RecyclerViewAdapter(this, cellList));
     }
 
     private void initViews() {
         recycler = findViewById(R.id.game_grid);
-        appBar = findViewById(R.id.game_bar);
+        //appBar = findViewById(R.id.game_bar);
         tvTime = findViewById(R.id.tvTime);
         tvPoints = findViewById(R.id.tvPoints);
     }
@@ -119,13 +117,15 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
     private void initObjects() {
         textSay = new TextSay(this);
         soundPlayer = new SoundPlayer(this);
-        currentTypeLanguage = CardLanguage.TypeLanguages.TYPE_GERMAN;
+        //currentTypeLanguage = CardLanguage.TypeLanguages.TYPE_GERMAN;
         currentLocalLanguage = TextSay.LocaleLanguage.GERMAN;
-        cardLanguage = new Animal(CardLanguage.Level.EASY_LEVEL);
-        textSayEndListener = new TextSayEndListener();
+        //cardLanguage = new Animal(CardLanguage.Level.EASY_LEVEL);
+        //textSayEndListener = new TextSayEndListener();
         timeKeeper = new TimeKeeper(this, TIME_LIMIT);
         mExplosionField = ExplosionField.attach2Window(this);
         handler = new Handler();
+        interpolator = new MyBounceInterpolator(0.2, 10);
+        // Use bounce interpolator with amplitude 0.2 and frequency 20
     }
 
     private <T> void shuffle(List<T> arrayList) {
@@ -141,55 +141,40 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
     }
 
     @Override
-    public void onClick(View view) {
-        final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
-
+    public void onClick(View currentCardClicked) {
+        myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
         // Use bounce interpolator with amplitude 0.2 and frequency 20
-        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 10);
         myAnim.setInterpolator(interpolator);
-        view.startAnimation(myAnim);
-
+        currentCardClicked.startAnimation(myAnim);
         try {
             if (++counter == 1) {
                 startTime = System.currentTimeMillis();
                 timeKeeper.start();
             }
             if (firstCard == null) {
-                firstCard = view;
+                firstCard = currentCardClicked;
                 firstCard.setOnClickListener(null);
                 firstPosition = ((int) firstCard.getTag());
-                textSay.setTextSayEndListener(null);
                 textSay.say(currentLocalLanguage, cellList.get(firstPosition).getAnimal());
             } else {
-                secondCard = view;
-                otherPosition = ((int) secondCard.getTag());
-                //textSay.say(currentLocalLanguage, cardLanguage.getLanguage(currentTypeLanguage, otherPosition));
-                //textSay.setTextSayEndListener(textSayEndListener);
+                int otherPosition = ((int) currentCardClicked.getTag());
                 boolean isSame = cellList.get(firstPosition).equals(cellList.get(otherPosition));
-                //textSayEndListener.setSame(isSame);
                 if (isSame) {
+                    timeKeeper.cancel();
+                    currentCardClicked.setOnClickListener(null);
                     rightGuesses++;
-                    tvPoints.setText("points : " + rightGuesses * 10);
+                    tvPoints.setText(String.format("points : %s", String.valueOf(rightGuesses * 10)));
                     mExplosionField.explode(firstCard);
-                    mExplosionField.explode(secondCard);
+                    mExplosionField.explode(currentCardClicked);
                     if (rightGuesses == cellList.size() / 2) {
-                        timeKeeper.cancel();
                         firstCard.setOnClickListener(null);
-                        secondCard.setOnClickListener(null);
+                        currentCardClicked.setOnClickListener(null);
                         soundPlayer.makeSoundGameCompleted();
-                        final long endTime = System.currentTimeMillis()-startTime;
-                        final int countTry = counter / 2;
+                        endTime = System.currentTimeMillis() - startTime;
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                String winMessage = "Level completed!";
-                                Intent lastScreenIntent = new Intent (MainActivity.this, GameFinishActivity.class);
-                                lastScreenIntent.putExtra("time", String.valueOf(endTime/1000));
-                                lastScreenIntent.putExtra("points",String.valueOf(rightGuesses * 10));
-                                lastScreenIntent.putExtra("tries", String.valueOf(countTry));
-                                lastScreenIntent.putExtra("win_lose", winMessage);
-                                startActivity(lastScreenIntent);
-                                finish();
+                                goToGameFinishActivity(String.valueOf(endTime / 1000) + " sec", "Level completed ! ");
                             }
                         }, 1000);
 
@@ -199,8 +184,8 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
                     }
                 } else {
                     soundPlayer.makeSoundFail();
+                    firstCard.setOnClickListener(this);
                 }
-                firstCard.setOnClickListener(this);
                 firstCard = null;
 
             }
@@ -209,16 +194,20 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
         }
     }
 
+    private void goToGameFinishActivity(String time, String winLoseMessage) {
+        Intent lastScreenIntent = new Intent(MainActivity.this, GameFinishActivity.class);
+        lastScreenIntent.putExtra(TIME, time);
+        lastScreenIntent.putExtra(POINTS, String.valueOf(rightGuesses * 10));
+        lastScreenIntent.putExtra(TRIES, String.valueOf(counter / 2));
+        lastScreenIntent.putExtra(WIN_LOSE, winLoseMessage);
+        startActivity(lastScreenIntent);
+        finish();
+    }
+
     @Override
     public void onTimeUpdate(final long seconds) {
         this.second = seconds;
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                tvTime.setText("time: " + Long.toString(second) + " sec");
-
-            }
-        });
+        handler.post(updateSecondTextRunnable);
     }
 
     @Override
@@ -226,40 +215,10 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
         handler.post(new Runnable() {
             @Override
             public void run() {
-                long endTime = System.currentTimeMillis() - startTime;
-                int countTry = counter / 2;
-                String winMessage = "Game over!";
-                Intent lastScreenIntent = new Intent (MainActivity.this, GameFinishActivity.class);
-                lastScreenIntent.putExtra("time", "time over");
-                lastScreenIntent.putExtra("points",String.valueOf(rightGuesses * 10));
-                lastScreenIntent.putExtra("tries", String.valueOf(countTry));
-                lastScreenIntent.putExtra("win_lose", winMessage);
-                startActivity(lastScreenIntent);
-                finish();
+                goToGameFinishActivity("time over", "Game over ! ");
             }
         });
     }
 
-    private class TextSayEndListener implements TextSay.TextSayEndListener {
-        private boolean isSame;
 
-
-        public void setSame(boolean same) {
-            isSame = same;
-        }
-
-        @Override
-        public void onFinish() {
-            try {
-                if (isSame) {
-                    soundPlayer.makeSoundSuccess();
-                } else {
-                    soundPlayer.makeSoundFail();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
-    }
 }

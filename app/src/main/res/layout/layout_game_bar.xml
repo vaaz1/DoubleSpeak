@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/game_bar"
+    android:id="@+id/rl_game_bar"
     android:layout_height="@dimen/app_bar_height"
     android:layout_width="match_parent"
     android:background="@drawable/ic_top_bar">

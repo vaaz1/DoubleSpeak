@@ -26,15 +26,17 @@
         android:layout_centerInParent="true"
         android:layout_centerVertical="true"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/horizontal_screen_edge_content_margin"
-        android:paddingRight="@dimen/horizontal_screen_edge_content_margin" />
+        android:paddingRight="-10dp"
+        android:paddingTop="@dimen/horizontal_screen_edge_content_margin"
+        android:paddingLeft="@dimen/horizontal_screen_edge_content_margin"/>
 
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
         android:paddingTop="@dimen/app_bar_height"
         android:text="@string/positive"
         android:textColor="@color/colorCaption"

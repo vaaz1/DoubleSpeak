@@ -3,8 +3,10 @@ package com.doublespeak.android.doublespeak.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.annotation.AnimRes;
 import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -35,6 +37,13 @@ public class Global {
             startViewAnimation(context, view, android.R.anim.fade_in);
             view.setVisibility(View.VISIBLE);
         }
+    }
+
+    public static float convertPixelsToDp(Context context, float px) {
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float dp = px / ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        return dp;
     }
 
     public static void hideViewWithFadeOut(Context context, View view) {

@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.doublespeak.android.doublespeak.R;
+import com.example.android.doublespeak.R;
 
 
 class RecyclerViewHolder extends RecyclerView.ViewHolder {

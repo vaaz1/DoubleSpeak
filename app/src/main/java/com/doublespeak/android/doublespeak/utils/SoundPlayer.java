@@ -6,39 +6,43 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.annotation.RawRes;
 
-import com.doublespeak.android.doublespeak.R;
+import com.example.android.doublespeak.R;
 
 import java.io.IOException;
 
 
 public class SoundPlayer {
 
-    private static final MediaPlayer.OnPreparedListener onPreparedListener = new MediaPlayer.OnPreparedListener(){
+    private static final MediaPlayer mediaPlayer;
+    private Context context;
+    private String packageName;
+
+    static {
+        mediaPlayer = new MediaPlayer();
+    }
+
+    private static final MediaPlayer.OnPreparedListener onPreparedListener = new MediaPlayer.OnPreparedListener() {
 
         @Override
         public void onPrepared(MediaPlayer mediaPlayer) {
             mediaPlayer.start();
         }
     };
-    private MediaPlayer mediaPlayer;
-    private Context context;
-    private String packageName;
 
-    public SoundPlayer(Context context){
+    public SoundPlayer(Context context) {
         this.context = context;
         packageName = context.getPackageName();
-        mediaPlayer = new MediaPlayer();
     }
 
-    public void stop(){
-        if (mediaPlayer.isPlaying()){
+    public void stop() {
+        if (mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
         }
     }
 
     public void makeSound(Sound sound) throws IOException {
         mediaPlayer.reset();
-        mediaPlayer.setDataSource(context,getUri(sound));
+        mediaPlayer.setDataSource(context, getUri(sound));
         mediaPlayer.prepare();
         mediaPlayer.setOnPreparedListener(onPreparedListener);
     }
@@ -54,6 +58,7 @@ public class SoundPlayer {
     public void makeSoundGameOver() throws IOException {
         makeSound(Sound.GameOver);
     }
+
     public void makeSoundCardClicked() throws IOException {
         makeSound(Sound.CardClicked);
     }
@@ -63,16 +68,16 @@ public class SoundPlayer {
     }
 
 
-    private Uri getUri(Sound sound){
+    private Uri getUri(Sound sound) {
         return Uri.parse("android.resource://" + packageName + "/" + sound.getRawResSound());
     }
 
-    public enum Sound{
-        Success(R.raw.success_sound), Fail(R.raw.fail_sound), GameOver(R.raw.sound_game_over), GameCompleted(R.raw.game_completed_sound),CardClicked(R.raw.click_card_sound);
+    public enum Sound {
+        Success(R.raw.success_sound), Fail(R.raw.fail_sound), GameOver(R.raw.sound_game_over), GameCompleted(R.raw.game_completed_sound), CardClicked(R.raw.click_card_sound);
 
         private int rawResSound;
 
-        Sound(@RawRes int rawResSound){
+        Sound(@RawRes int rawResSound) {
             this.rawResSound = rawResSound;
         }
 

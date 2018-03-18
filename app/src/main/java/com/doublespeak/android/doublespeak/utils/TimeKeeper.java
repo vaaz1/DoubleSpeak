@@ -8,8 +8,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-
-
 public final class TimeKeeper {
     private final WeakReference<TimerCallback> callback;
     private final Timer timer;
@@ -17,17 +15,10 @@ public final class TimeKeeper {
     private long initialTime;
     private long elapsedTime;
 
-
-
-
-
-
-    public TimeKeeper(@NonNull TimerCallback callback,long timeLimit) {
+    public TimeKeeper(@NonNull TimerCallback callback, long timeLimit) {
         this.timeLimit = timeLimit;
         this.timer = new Timer();
         this.callback = new WeakReference<>(callback);
-
-
     }
 
     public void cancel() {
@@ -36,7 +27,7 @@ public final class TimeKeeper {
     }
 
 
-    public void start(){
+    public void start() {
         // Update the elapsed time every second.
         this.initialTime = SystemClock.elapsedRealtime();
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -44,7 +35,7 @@ public final class TimeKeeper {
             public void run() {
                 elapsedTime = (SystemClock.elapsedRealtime() - initialTime) / 1000;
                 long remainingTime = timeLimit - elapsedTime;
-                if (remainingTime < 0){
+                if (remainingTime < 0) {
                     remainingTime *= -1;
                 }
                 if (callback.get() == null) {

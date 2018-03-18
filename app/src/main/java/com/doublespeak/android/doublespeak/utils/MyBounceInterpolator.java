@@ -1,20 +1,17 @@
 package com.doublespeak.android.doublespeak.utils;
 
-/**
- * Created by home on 3/16/2018.
- */
 
 public class MyBounceInterpolator implements android.view.animation.Interpolator {
     /**
      * The amplitude of the bounces. The higher value (10, for example) produces more pronounced bounces.
      * The lower values (0.1, for example) produce less noticeable wobbles.
      */
-    double mAmplitude = 1;
+    private double mAmplitude = 1;
 
     /**
      * The frequency of the bounces. The higher value produces more wobbles during the animation time period.
      */
-    double mFrequency = 10;
+    private double mFrequency = 10;
 
     /**
      * Initialize a new interpolator.

@@ -1,7 +1,7 @@
 package com.doublespeak.android.doublespeak.carddata;
 
 
-import com.doublespeak.android.doublespeak.R;
+import com.example.android.doublespeak.R;
 
 public class Animal extends CardLanguage {
 
@@ -10,7 +10,7 @@ public class Animal extends CardLanguage {
     }
 
 
-    protected void addEasyLanguages( String... languages) {
+    private void addEasyLanguages(String... languages) {
         addEasyLanguages(R.drawable.putin, languages);
     }
 

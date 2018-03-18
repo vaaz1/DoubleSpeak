@@ -4,8 +4,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
-import com.doublespeak.android.doublespeak.R;
 import com.doublespeak.android.doublespeak.utils.Global;
+import com.example.android.doublespeak.R;
+
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -13,9 +14,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
     }
-
 
     @Override
     protected void onStart() {
@@ -25,7 +24,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 proceed();
             }
-        }, 3000);
+        }, 1000);
     }
 
 

@@ -5,9 +5,6 @@ import android.util.Pair;
 
 import java.util.Map;
 
-/**
- * Created by roman on 15/03/2018.
- */
 
 public final class GameGrid {
 
@@ -18,7 +15,7 @@ public final class GameGrid {
         this.positionAnimalMap = positionAnimalMap;
     }
 
-    private final Cell getCellAtPos(Pair pos) {
+    private Cell getCellAtPos(Pair pos) {
         return positionAnimalMap.get(pos);
     }
 }
