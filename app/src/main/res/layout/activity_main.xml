@@ -19,14 +19,15 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/game_grid"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/rl_game_bar"
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
         android:layout_centerVertical="true"
         android:orientation="vertical"
         android:paddingLeft="@dimen/horizontal_screen_edge_content_margin"
+        android:paddingTop="@dimen/horizontal_screen_edge_content_margin"
         android:paddingRight="@dimen/horizontal_screen_edge_content_margin" />
 
 

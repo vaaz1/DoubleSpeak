@@ -19,7 +19,9 @@ import com.doublespeak.android.doublespeak.utils.TextSay;
 import com.doublespeak.android.doublespeak.utils.TimeKeeper;
 import com.example.android.doublespeak.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
     public static final String WIN_LOSE = "win_lose";
 
     private TextView tvTime, tvPoints;
-
+    private HashMap<Integer,Integer> hashMap = new HashMap<>();
 
     static {
         cellList.add(new Cell("Löwe", R.drawable.lowe));
@@ -66,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
     private RecyclerView recycler;
     private TimeKeeper timeKeeper;
     private Handler handler;
-    private Animation myAnim;
     private MyBounceInterpolator interpolator;
     private Runnable updateSecondTextRunnable = new Runnable() {
         @Override
@@ -85,14 +86,22 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
         initArray();
         shuffle(cellList);
         initRecyclerView();
+        try {
+            soundPlayer.makeSoundBackground();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initArray() {
         try {
             List<Cell> cells = new ArrayList<>();
             for (int i = 0; i < cellList.size(); i += 2) {
-                cells.add(i, ((Cell) cellList.get(i / 2).clone()).setModeCell(Cell.ModeCell.IsText));
-                cells.add(i + 1, ((Cell) cellList.get(i / 2).clone()).setModeCell(Cell.ModeCell.IsImage));
+                Cell cellText = ((Cell) cellList.get(i / 2).clone()).setModeCell(Cell.ModeCell.IsText);
+                Cell cellImage = ((Cell) cellList.get(i / 2).clone()).setModeCell(Cell.ModeCell.IsImage);
+                cells.add(i, cellText);
+                cells.add(i + 1, cellImage);
+
             }
             cellList.clear();
             cellList.addAll(cells);
@@ -133,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
         int randomNumber;
         T temp;
         for (int i = 0; i < arrayList.size(); i++) {
-            randomNumber = random.nextInt(arrayList.size());
+            while ((randomNumber = random.nextInt(arrayList.size())) == i){}
             temp = arrayList.get(i);
             arrayList.set(i, arrayList.get(randomNumber));
             arrayList.set(randomNumber, temp);
@@ -142,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
 
     @Override
     public void onClick(View currentCardClicked) {
-        myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
+        Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
         // Use bounce interpolator with amplitude 0.2 and frequency 20
         myAnim.setInterpolator(interpolator);
         currentCardClicked.startAnimation(myAnim);
@@ -160,7 +169,6 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
                 int otherPosition = ((int) currentCardClicked.getTag());
                 boolean isSame = cellList.get(firstPosition).equals(cellList.get(otherPosition));
                 if (isSame) {
-                    timeKeeper.cancel();
                     currentCardClicked.setOnClickListener(null);
                     rightGuesses++;
                     tvPoints.setText(String.format("points : %s", String.valueOf(rightGuesses * 10)));
@@ -187,7 +195,6 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
                     firstCard.setOnClickListener(this);
                 }
                 firstCard = null;
-
             }
         } catch (Exception e) {
             e.getStackTrace();
@@ -202,6 +209,20 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
         lastScreenIntent.putExtra(WIN_LOSE, winLoseMessage);
         startActivity(lastScreenIntent);
         finish();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        soundPlayer.playSoundBackground();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        soundPlayer.pauseSoundBackground();
+        timeKeeper.cancel();
     }
 
     @Override
@@ -219,6 +240,4 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
             }
         });
     }
-
-
 }

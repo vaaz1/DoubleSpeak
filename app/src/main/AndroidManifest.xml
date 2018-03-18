@@ -8,9 +8,8 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo_final"
         android:supportsRtl="false"
-        android:theme="@style/AppTheme">
-
-
+        android:theme="@style/AppTheme"
+        android:fullBackupContent="@xml/backup_descriptor">
         <activity android:name="com.doublespeak.android.doublespeak.activities.SplashActivity"
             android:screenOrientation="landscape">
             <intent-filter>
@@ -18,12 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name="com.doublespeak.android.doublespeak.activities.MainActivity"
             android:screenOrientation="landscape"/>
         <activity android:name="com.doublespeak.android.doublespeak.activities.GameFinishActivity"
             android:screenOrientation="landscape"/>
-
     </application>
-
 </manifest>
