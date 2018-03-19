@@ -1,12 +1,12 @@
 # DoubleSpeak 
 
-A super-ultra-awesome language learning memory game android app
+A super-ultra-uber-awesome language learning memory puzzle game android app
 
 ## Preview
 ![app play preview animation](app.gif) 
 
-## Concept Game Mechanic
-a mix between a memory game and some akin to Candy Crush. 
+## Concept Game Mechanics
+a mix between a memory game and something akin to Candy Crush. 
 
 ![memory game](mem_game.gif)  ![candy crush](candy_crush.gif)
 
