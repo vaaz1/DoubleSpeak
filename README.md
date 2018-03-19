@@ -10,7 +10,11 @@ a mix between a memory game and something akin to Candy Crush.
 
 ![memory game](mem_game.gif)  ![candy crush](candy_crush.gif)
 
+## Google Play Store
+https://play.google.com/store/apps/details?id=com.doublespeak.android.doublespeak
 
+## Version
+currently at the initial release version 0.0.1-alpha
 
 ## Responsibilities
 
