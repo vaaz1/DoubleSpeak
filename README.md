@@ -2,6 +2,9 @@
 
 A super-ultra-awesome language learning memory game android app
 
+## Preview
+![app play preview animation](app.gif) 
+
 ## Concept Game Mechanic
 a mix between a memory game and some akin to Candy Crush. 
 
