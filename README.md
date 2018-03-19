@@ -12,25 +12,27 @@ a mix between a memory game and some akin to Candy Crush.
 ## Responsibilities
 
 ### Vera
-
-1. wireframes
-2. assignments
+Architecture 
 
 ### Zofi
-
-1. design
-2. animated gifs
+Design
 
 ### Itamar
-
-1. ~~Sound~~
-2. ~~Text to speech~~
+Presentation Logic
 
 ### Yuri
-
-1. shuffle  animations and implementation
+Animations
 
 ### Roman
+Maintainer
 
-1. ~~app base infrastructure~~
-2. ~~local cell animations~~
+## Planned Features 
+1. more words and images
+2. more languages
+3. highscore/statistics/achievement feature and persistence
+4. candycrush (new card swap in and shuffle) functionality
+5. improved risk/reward game mechanics
+6. improved/more feedback features and animations ('sweet!', score after card pop, animated animals, etc).
+6. multi-platform release (Tablet, TV, Wear, etc).
+7. multiplayer
+8. cloud accounts
