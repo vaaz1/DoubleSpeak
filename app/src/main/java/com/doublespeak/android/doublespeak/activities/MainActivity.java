@@ -22,8 +22,11 @@ import com.example.android.doublespeak.R;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 import tyrantgit.explosionfield.ExplosionField;
 
@@ -93,35 +96,6 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
         }
     }
 
-    private void initArray() {
-        try {
-            List<Cell> cells = new ArrayList<>();
-            for (int i = 0; i < cellList.size(); i += 2) {
-                Cell cellText = ((Cell) cellList.get(i / 2).clone()).setModeCell(Cell.ModeCell.IsText);
-                Cell cellImage = ((Cell) cellList.get(i / 2).clone()).setModeCell(Cell.ModeCell.IsImage);
-                cells.add(i, cellText);
-                cells.add(i + 1, cellImage);
-
-            }
-            cellList.clear();
-            cellList.addAll(cells);
-        } catch (Exception ignore) {
-
-        }
-    }
-
-    private void initRecyclerView() {
-        recycler.setHasFixedSize(true);
-        recycler.setLayoutManager(new GridLayoutManager(this, NUM_OF_COLUMNS));
-        recycler.setAdapter(new RecyclerViewAdapter(this, cellList));
-    }
-
-    private void initViews() {
-        recycler = findViewById(R.id.game_grid);
-        //appBar = findViewById(R.id.game_bar);
-        tvTime = findViewById(R.id.tvTime);
-        tvPoints = findViewById(R.id.tvPoints);
-    }
 
     private void initObjects() {
         textSay = new TextSay(this);
@@ -137,17 +111,62 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
         // Use bounce interpolator with amplitude 0.2 and frequency 20
     }
 
+
+
+    private void initArray() {
+        Map<Integer,Boolean> hashMap = new HashMap();
+        try {
+            List<Cell> cells = new ArrayList<>();
+            int idRes;
+            for (int i = 0; i < cellList.size(); i++) {
+                Cell cellText = ((Cell) cellList.get(i).clone()).setModeCell(Cell.ModeCell.IsText);
+                Cell cellImage = ((Cell) cellText.clone()).setModeCell(Cell.ModeCell.IsImage);
+                idRes = cellImage.getImageRes();
+                if (hashMap.get(idRes) != null){
+                    continue;
+                }
+                if (hashMap.size() == cellList.size()/2){
+                    break;
+                }
+                hashMap.put(idRes,true);
+                cells.add(cellText);
+                cells.add(cellImage);
+            }
+            cellList.clear();
+            cellList.addAll(cells);
+        } catch (Exception ignore) {
+
+        }
+    }
+
+
     private <T> void shuffle(List<T> arrayList) {
         Random random = new Random(System.currentTimeMillis());
         int randomNumber;
         T temp;
         for (int i = 0; i < arrayList.size(); i++) {
-            while ((randomNumber = random.nextInt(arrayList.size())) == i){}
+            while ((randomNumber = random.nextInt(arrayList.size())) == i);
             temp = arrayList.get(i);
             arrayList.set(i, arrayList.get(randomNumber));
             arrayList.set(randomNumber, temp);
         }
     }
+
+
+    private void initRecyclerView() {
+        recycler.setHasFixedSize(true);
+        recycler.setLayoutManager(new GridLayoutManager(this, NUM_OF_COLUMNS));
+        recycler.setAdapter(new RecyclerViewAdapter(this, cellList));
+    }
+
+    private void initViews() {
+        recycler = findViewById(R.id.game_grid);
+        //appBar = findViewById(R.id.game_bar);
+        tvTime = findViewById(R.id.tvTime);
+        tvPoints = findViewById(R.id.tvPoints);
+    }
+
+
 
     @Override
     public void onClick(View currentCardClicked) {

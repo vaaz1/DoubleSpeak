@@ -43,7 +43,9 @@ public final class Cell implements Cloneable {
         if (obj == null) {
             return false;
         } else if (obj instanceof Cell) {
-            return this.getImageRes() == ((Cell) obj).getImageRes();
+            Cell otherCell = ((Cell) obj);
+            return this.getImageRes() == otherCell.getImageRes() && this.getModeCell() != null &&
+                    otherCell.getModeCell() != null && !this.getModeCell().equals(otherCell.getModeCell());
         }
         return false;
     }
