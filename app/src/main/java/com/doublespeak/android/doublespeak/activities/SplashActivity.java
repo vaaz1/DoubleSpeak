@@ -37,8 +37,11 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (!isDestroyed()) {
+                    //Global.fadeView(1,0,lottieAnimationView,60);
                     tvGoodLuck.setVisibility(View.VISIBLE);
+                    //Global.fadeView(0,1,tvGoodLuck,100);
                     lottieAnimationView.cancelAnimation();
+                    lottieAnimationView.setVisibility(View.INVISIBLE);
                     startActivity(new Intent(SplashActivity.this, MainActivity.class));
                     finish();
                 }

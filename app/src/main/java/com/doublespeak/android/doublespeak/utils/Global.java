@@ -8,6 +8,7 @@ import android.support.annotation.AnimRes;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -27,7 +28,12 @@ public class Global {
             view.startAnimation(anim);
         }
     }
-
+    public static void fadeView(int from, int to, View view, long time) {
+        Animation alpha = new AlphaAnimation(from, to);
+        alpha.setInterpolator(new AccelerateInterpolator());
+        alpha.setDuration(time);
+        view.startAnimation(alpha);
+    }
 
     /* Alpha Animations */
 
