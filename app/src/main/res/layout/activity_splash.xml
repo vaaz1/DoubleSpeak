@@ -8,7 +8,7 @@
     <!--<ImageView-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent"-->
-    <!--android:src="@drawable/logo_final"/>-->
+    <!--android:src="@drawaiconinal"/>-->
 
     <com.airbnb.lottie.LottieAnimationView
         android:layout_centerInParent="true"

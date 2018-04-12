@@ -186,6 +186,7 @@ public class MainActivity extends AppCompatActivity implements TimeKeeper.TimerC
                 firstPosition = ((int) firstCard.getTag());
                 textSay.say(currentLocalLanguage, cellList.get(firstPosition).getAnimal());
             } else {
+
                 int otherPosition = ((int) currentCardClicked.getTag());
                 boolean isSame = cellList.get(firstPosition).equals(cellList.get(otherPosition));
                 if (isSame) {

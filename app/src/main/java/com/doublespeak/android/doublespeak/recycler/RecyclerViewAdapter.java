@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.doublespeak.android.doublespeak.models.Cell;
 import com.example.android.doublespeak.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -37,13 +38,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
     }
 
 
+    public static int returnOther(int one, int two){
+        return one > two ? one : two;
+    }
+
     @Override
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
         holder.itemView.setTag(position);
         Cell bookAtPosition = cellList.get(position);
         switch (bookAtPosition.getModeCell()) {
             case IsImage:
-                Glide.with(context).load(bookAtPosition.getImageRes()).into(holder.image);
+                Picasso.get().load(bookAtPosition.getImageRes()).into(holder.image);
                 break;
             case IsText:
                 holder.tvText.setText(bookAtPosition.getAnimal());
